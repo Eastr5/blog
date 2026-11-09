@@ -29,8 +29,9 @@ ACCENT = {"light": "#1F7A52", "dark": "#4CAF82"}
 W, H = 1000, 560
 
 def parse(path):
-    txt = path.read_text(encoding="utf-8")
-    m = re.match(r"---\s*\n(.*?)\n---", txt, re.S)
+    sidecar = ROOT / "posts" / "meta" / (path.stem + ".yaml")
+    txt = sidecar.read_text(encoding="utf-8") if sidecar.exists() else path.read_text(encoding="utf-8")
+    m = re.match(r"---\s*\n(.*?)\n---", "---\n" + txt + "\n---", re.S)
     meta, key = {}, None
     for line in (m.group(1) if m else "").splitlines():
         if re.match(r"^\s+-\s+", line) and key:

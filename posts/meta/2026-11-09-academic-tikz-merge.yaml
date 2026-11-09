@@ -1,0 +1,11 @@
+title: Skills 花样众多，损耗的是注意力，边际效益会下降
+date: 2026-11-09
+tags: [AI产品, Skills, 整合与治理]
+source: Claude Code skills + 三个开源上游仓库
+status: draft
+series: AI 产品
+kicker: SKILLS 治理
+questions:
+  - 给 AI 装了几十个技能之后，为什么反而更难选对该用哪个？
+  - 把重复的技能合并成一个，为什么还是解决不了根本问题？
+  - 技能多了该谁来管：为什么不能指望 AI 自己收拾自己？
