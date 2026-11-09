@@ -26,7 +26,7 @@ THEME = {
     "dark":  dict(bg="#1C1C1A", border="#33322E", text="#E8E6E1", muted="#96917F", hair="#3A3833"),
 }
 ACCENT = {"light": "#1F7A52", "dark": "#4CAF82"}
-W, H = 1000, 560
+W, H = 860, 400
 
 def parse(path):
     sidecar = ROOT / "posts" / "meta" / (path.stem + ".yaml")
@@ -60,16 +60,16 @@ def card_html(meta, mode):
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 *{{box-sizing:border-box;margin:0}}
 html,body{{width:{W}px;height:{H}px;background:{t['bg']}}}
-.card{{width:{W}px;height:{H}px;padding:56px 64px 48px;background:{t['bg']};
+.card{{width:{W}px;height:{H}px;padding:40px 52px 36px;background:{t['bg']};
  border:1px solid {t['border']};border-radius:10px;font-family:"Noto Serif SC","Source Han Serif SC",SimSun,serif;color:{t['text']};
  display:flex;flex-direction:column}}
-h1{{font-size:44px;line-height:1.42;font-weight:700;letter-spacing:.01em}}
-.rulerow{{display:flex;align-items:center;gap:18px;margin:30px 0 30px}}
+h1{{font-size:36px;line-height:1.5;font-weight:700;letter-spacing:.01em}}
+.rulerow{{display:flex;align-items:center;gap:18px;margin:24px 0 22px}}
 .rule{{width:64px;border:0;border-top:3px solid {acc}}}
 .date{{font-size:16px;color:{t['muted']};font-family:"Microsoft YaHei",sans-serif;letter-spacing:.08em}}
 .lab{{font-size:15px;letter-spacing:.2em;color:{t['muted']};font-family:"Microsoft YaHei",sans-serif}}
 ul{{list-style:none;padding:0;margin-top:12px}}
-li{{font-size:22px;line-height:2.05;color:{t['text']}}}
+li{{font-size:19px;line-height:1.95;color:{t['text']}}}
 .n{{font-size:15px;color:{acc};letter-spacing:.1em;margin-right:16px;font-family:"Microsoft YaHei",sans-serif}}
 </style></head><body><div class="card">
 <h1>{e(meta.get('title',''))}</h1>
