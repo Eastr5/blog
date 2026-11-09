@@ -14,7 +14,7 @@
 
 <!-- 新增文章后在此追加一行：- YYYY-MM-DD [标题](./posts/文件名.md) -->
 
-- 2026-11-09 [Skills 越多越迷失：我为什么把三个 TikZ 技能合成一个](./posts/2026-11-09-academic-tikz-merge.md) · AI 产品 · 草稿
+- 2026-11-09 [Skills 花样众多，损耗的是注意力，边际效益会下降](./posts/2026-11-09-academic-tikz-merge.md) · AI 产品 · 草稿
 
 ## 写作约定
 
