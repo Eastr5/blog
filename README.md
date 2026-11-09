@@ -14,11 +14,11 @@
 
 <!-- 新增文章后在此追加一行：- YYYY-MM-DD [标题](./posts/文件名.md) -->
 
-（即将更新）
+- 2026-11-09 [Skills 越多越迷失：我为什么把三个 TikZ 技能合成一个](./posts/2026-11-09-academic-tikz-merge.md) · AI 产品 · 草稿
 
 ## 写作约定
 
 - 新文章复制 [`_template.md`](./_template.md) 到 `posts/`，文件名用 `YYYY-MM-DD-简短主题.md`
 - 只保留结论和自己的判断，不整段粘贴对话原文
 - 不涉及公司内部数据、未发表的研究细节和他人隐私
-- `status: draft` 的文章不加入上面的文章列表，整理完改为 `published`
+- `status: draft` 的文章可以先加入上面的文章列表，但要在行尾标注“草稿”；整理完改为 `published` 并去掉标注
