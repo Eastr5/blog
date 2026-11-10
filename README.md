@@ -15,8 +15,7 @@
 <!-- 新增文章后在此追加一行：- YYYY-MM-DD [标题](./posts/文件名.md) -->
 
 - 2026-11-09 [Skills 花样众多，损耗的是注意力，边际效益会下降](./posts/2026-11-09-academic-tikz-merge.md) · AI 产品 · 草稿
-- 2026-11-10 [上下文不是免费的：skills 与思考档位](./posts/2026-11-10-context-budget.md) · AI 产品 · 草稿
-- 2026-11-10 [上下文不是免费的：skills 与思考档位](./posts/2026-11-10-context-budget.md) · AI 产品 · 草稿
+- 2026-11-10 [上下文，该管管了](./posts/2026-11-10-context-budget.md) · AI 产品 · 草稿
 
 ## 写作约定
 

@@ -22,10 +22,10 @@ SERIES = {
     "和 AI 协作的方式": ("#B5651D", "#E09A4F"),
 }
 THEME = {
-    "light": dict(bg="#F7F6F3", border="#E2E0DA", text="#24292F", muted="#8A8578", hair="#D8D5CC"),
-    "dark":  dict(bg="#1C1C1A", border="#33322E", text="#E8E6E1", muted="#96917F", hair="#3A3833"),
+    "light": dict(bg="linear-gradient(135deg,#F4F7F5 0%,#E8F0EB 100%)", border="#D3DED8", text="#1E2B25", muted="#75877E"),
+    "dark":  dict(bg="linear-gradient(135deg,#141A17 0%,#1B2721 100%)", border="#2C3B33", text="#E6EFE9", muted="#8FA89B"),
 }
-ACCENT = {"light": "#1F7A52", "dark": "#4CAF82"}
+ACCENT = {"light": "linear-gradient(90deg,#1F7A52,#0F5132)", "dark": "linear-gradient(90deg,#4CAF82,#7FD8A6)"}
 W, H = 860, 400
 
 def parse(path):
@@ -65,14 +65,16 @@ html,body{{width:{W}px;height:{H}px;background:{t['bg']}}}
  display:flex;flex-direction:column}}
 h1{{font-size:36px;line-height:1.5;font-weight:700;letter-spacing:.01em}}
 .rulerow{{display:flex;align-items:center;gap:18px;margin:24px 0 22px}}
-.rule{{width:64px;border:0;border-top:3px solid {acc}}}
+.rule{{width:64px;height:3px;border:0;border-radius:2px;background:{acc}}}
 .date{{font-size:16px;color:{t['muted']};font-family:"Microsoft YaHei",sans-serif;letter-spacing:.08em}}
+.sub{{font-size:17px;color:{t["muted"]};margin-top:10px;font-family:"Noto Serif SC",serif}}
 .lab{{font-size:15px;letter-spacing:.2em;color:{t['muted']};font-family:"Microsoft YaHei",sans-serif}}
 ul{{list-style:none;padding:0;margin-top:12px}}
 li{{font-size:19px;line-height:1.95;color:{t['text']}}}
-.n{{font-size:15px;color:{acc};letter-spacing:.1em;margin-right:16px;font-family:"Microsoft YaHei",sans-serif}}
+.n{{font-size:15px;background:{acc};-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.1em;margin-right:16px;font-family:"Microsoft YaHei",sans-serif}}
 </style></head><body><div class="card">
 <h1>{e(meta.get('title',''))}</h1>
+{('<p class="sub">' + e(meta.get('subtitle','')) + '</p>') if meta.get('subtitle') else ''}
 <div class="rulerow"><hr class="rule"><span class="date">{e(meta.get('date',''))}</span></div>
 <div class="lab">这篇想回答</div><ul>{qs}</ul>
 </div></body></html>"""
