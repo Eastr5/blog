@@ -21,11 +21,19 @@ SERIES = {
     "数据与风控": ("#2F5D8A", "#6AA6E0"),
     "和 AI 协作的方式": ("#B5651D", "#E09A4F"),
 }
-THEME = {
-    "light": dict(bg="linear-gradient(135deg,#F4F7F5 0%,#E8F0EB 100%)", border="#D3DED8", text="#1E2B25", muted="#75877E"),
-    "dark":  dict(bg="linear-gradient(135deg,#141A17 0%,#1B2721 100%)", border="#2C3B33", text="#E6EFE9", muted="#8FA89B"),
+# 每篇文章可自选配色：meta 里 palette: warm | sage（默认 warm）
+PALETTES = {
+    "warm": {
+        "light": dict(bg="#F7F6F3", border="#E2E0DA", text="#24292F", muted="#8A8578"),
+        "dark":  dict(bg="#1C1C1A", border="#33322E", text="#E8E6E1", muted="#96917F"),
+        "acc": {"light": "#1F7A52", "dark": "#4CAF82"},
+    },
+    "sage": {
+        "light": dict(bg="linear-gradient(135deg,#F4F7F5 0%,#E8F0EB 100%)", border="#D3DED8", text="#1E2B25", muted="#75877E"),
+        "dark":  dict(bg="linear-gradient(135deg,#141A17 0%,#1B2721 100%)", border="#2C3B33", text="#E6EFE9", muted="#8FA89B"),
+        "acc": {"light": "linear-gradient(90deg,#1F7A52,#0F5132)", "dark": "linear-gradient(90deg,#4CAF82,#7FD8A6)"},
+    },
 }
-ACCENT = {"light": "linear-gradient(90deg,#1F7A52,#0F5132)", "dark": "linear-gradient(90deg,#4CAF82,#7FD8A6)"}
 W, H = 860, 400
 
 def parse(path):
@@ -50,8 +58,9 @@ def parse(path):
 
 
 def card_html(meta, mode):
-    t = THEME[mode]
-    acc = ACCENT[mode]
+    pal = PALETTES.get(meta.get("palette", "warm"), PALETTES["warm"])
+    t = pal[mode]
+    acc = pal["acc"][mode]
     e = lambda s: html.escape(str(s))
     qs = "".join(
         f'<li><span class="n">{"01 02 03 04".split()[i]}</span>{e(q)}</li>'
