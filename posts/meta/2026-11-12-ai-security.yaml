@@ -1,0 +1,13 @@
+title: AI 把攻防的时间差压到了小时级
+palette: warm
+subtitle: 从币安 63 亿被盗，到网安行业的黑色十月
+date: 2026-11-12
+tags: [AI产品, 安全, 攻防]
+source: 币安公告与彭博复盘 + Black October 公开披露 + 个人判断
+status: draft
+series: AI 产品
+kicker: AI 与安全
+questions:
+  - 币安 63 亿被盗，为什么内部 AI 工具成了攻击者的跳板？
+  - 黑色十月：为什么一个月冒出约 1.7 万个 CVE，纪录还被反复刷新？
+  - 攻击提速到小时级之后，防御的思路该怎么改？
