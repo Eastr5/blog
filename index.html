@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 笔记簿 · Eastr5</title>
+<title>张世昌 Shawn Zhang · AI 产品经理</title>
+<meta name="description" content="张世昌（Shawn Zhang），AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。中央财经大学电子商务本科、产业经济学硕士（数字经济方向）。这里是我的个人主页与 AI 笔记簿。">
 <script src="assets/js/marked.min.js"></script>
 <style>
 :root{
@@ -19,7 +20,7 @@
   }
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font:16px/1.9 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
@@ -37,54 +38,110 @@ a:hover{text-decoration:underline}
 .masthead{background:var(--green-deep); color:#F2F1EC}
 .masthead .wrap{
   display:flex; align-items:baseline; justify-content:space-between;
-  padding-top:16px; padding-bottom:16px; gap:16px;
+  padding-top:16px; padding-bottom:16px; gap:18px;
 }
 .masthead .brand{
   font-size:13px; letter-spacing:4px; font-weight:700; color:#F2F1EC;
+  white-space:nowrap;
 }
 .masthead .brand em{font-style:normal; color:#D9A96B}
-.masthead .tag{
-  font-size:12.5px; color:#B9C9BE; letter-spacing:1px;
-  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+.masthead nav{display:flex; gap:18px; flex:1; justify-content:center}
+.masthead nav a{
+  font-size:12.5px; color:#B9C9BE; letter-spacing:2px;
 }
-.masthead a{color:#D9A96B; font-size:12.5px; letter-spacing:2px}
-.masthead a:hover{color:#F2F1EC; text-decoration:none}
+.masthead nav a:hover{color:#F2F1EC; text-decoration:none}
+.masthead .gh{color:#D9A96B; font-size:12.5px; letter-spacing:2px; white-space:nowrap}
+.masthead .gh:hover{color:#F2F1EC; text-decoration:none}
 
-main{padding-top:52px; padding-bottom:72px}
+main{padding-top:54px; padding-bottom:20px}
 .kicker{
   font-size:12.5px; letter-spacing:3px; color:var(--green);
   font-weight:700; margin:0 0 14px;
 }
 .kicker .no{color:var(--tan)}
-h1.mast{
+h2.sec{
   font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
-  font-size:38px; line-height:1.35; font-weight:700; margin:0 0 12px;
-  border-left:5px solid var(--green); padding-left:18px;
+  font-size:26px; line-height:1.4; font-weight:700; margin:0 0 22px;
+  border-left:5px solid var(--green); padding-left:16px;
 }
-.lede{color:var(--muted); margin:0 0 8px; font-size:15.5px}
-.rule{height:1px; background:var(--line); border:0; margin:34px 0 0}
+section{margin-bottom:64px}
+.rule{height:1px; background:var(--line); border:0; margin:0 0 44px}
 
-/* 文章列表 */
-.post{display:flex; gap:22px; padding:26px 0; border-bottom:1px solid var(--line)}
-.post .body{flex:1; min-width:0}
-.post .kick{font-size:11.5px; letter-spacing:2px; color:var(--green); font-weight:700}
-.post .title{
+/* Hero */
+.hero-name{
   font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
-  font-size:21.5px; font-weight:700; line-height:1.5; margin:7px 0 9px; color:var(--ink);
+  font-size:46px; line-height:1.2; font-weight:700; margin:0 0 8px;
 }
-a.plink:hover{text-decoration:none}
-a.plink:hover .title{color:var(--green)}
-.post .meta{font-size:12.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
-.post .when{font-size:12px; color:var(--muted); letter-spacing:1.5px; white-space:nowrap; padding-top:6px}
+.hero-name .latin{
+  display:block; font-size:26px; font-style:italic; font-weight:400;
+  color:var(--muted); letter-spacing:.5px; margin-top:6px;
+}
+.hero-lede{
+  font-size:18px; color:var(--ink); margin:18px 0 22px; line-height:1.8;
+}
+.hero-text{color:var(--ink); font-size:15.5px}
+.hero-text p{margin:14px 0}
+.tags{display:flex; flex-wrap:wrap; gap:8px; margin:24px 0 10px}
 .pill{
   display:inline-block; background:var(--green-soft); color:var(--green);
-  border-radius:999px; padding:2px 12px; font-size:12px; letter-spacing:.5px;
+  border-radius:999px; padding:3px 14px; font-size:12.5px; letter-spacing:.5px;
 }
 .draft{
   display:inline-block; border:1px solid var(--tan); color:var(--tan);
   border-radius:999px; padding:1px 10px; font-size:11.5px;
 }
-.footnote{color:var(--muted); font-size:12.5px; margin-top:26px}
+.links{display:flex; gap:18px; flex-wrap:wrap; margin-top:16px; font-size:14px; letter-spacing:1px}
+
+/* 项目卡片 */
+.project{
+  border:1px solid var(--line); border-radius:10px; padding:22px 24px;
+  margin-bottom:16px; background:var(--panel); transition:border-color .15s ease;
+}
+.project:hover{border-color:var(--green)}
+.project .p-top{display:flex; justify-content:space-between; align-items:baseline; gap:14px}
+.project h3{
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:19px; margin:0 0 6px; font-weight:700;
+}
+.project .year{color:var(--muted); font-size:12px; letter-spacing:1.5px; white-space:nowrap}
+.project p{margin:8px 0 0; color:var(--ink); font-size:14.5px; line-height:1.8}
+.project .p-meta{margin-top:12px; font-size:12.5px; color:var(--muted); display:flex; gap:14px; flex-wrap:wrap}
+.project .p-meta a{letter-spacing:.5px}
+
+/* 写作列表 */
+.post{display:flex; gap:22px; padding:22px 0; border-bottom:1px solid var(--line)}
+.post:first-of-type{padding-top:0}
+.post .body{flex:1; min-width:0}
+.post .kick{font-size:11.5px; letter-spacing:2px; color:var(--green); font-weight:700}
+.post .title{
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:20px; font-weight:700; line-height:1.5; margin:6px 0 8px; color:var(--ink);
+}
+a.plink:hover{text-decoration:none}
+a.plink:hover .title{color:var(--green)}
+.post .meta{font-size:12.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.post .when{font-size:12px; color:var(--muted); letter-spacing:1.5px; white-space:nowrap; padding-top:5px}
+
+/* 经历时间线 */
+.tl{position:relative; margin:0; padding:0; list-style:none}
+.tl li{
+  position:relative; padding:0 0 30px 26px; border-left:2px solid var(--line);
+}
+.tl li:last-child{border-left:2px solid transparent; padding-bottom:0}
+.tl li::before{
+  content:""; position:absolute; left:-6px; top:9px; width:10px; height:10px;
+  border-radius:50%; background:var(--green);
+}
+.tl .when{font-size:12px; letter-spacing:2px; color:var(--tan); font-weight:700}
+.tl .what{
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:17px; font-weight:700; margin:4px 0 4px;
+}
+.tl .desc{color:var(--muted); font-size:14px; margin:0}
+
+/* 联系 */
+.contact{color:var(--ink); font-size:15.5px}
+.contact p{margin:0 0 16px}
 
 /* 文章页 */
 .subtitle{color:var(--muted); font-size:15.5px; margin:0 0 10px}
@@ -130,8 +187,10 @@ a.plink:hover .title{color:var(--green)}
 }
 .foot a{color:#D9A96B}
 @media (max-width:640px){
-  .masthead .tag{display:none}
-  h1.mast{font-size:30px}
+  .masthead nav{display:none}
+  .hero-name{font-size:36px}
+  .hero-name .latin{font-size:21px}
+  h2.sec{font-size:22px}
   .post .when{display:none}
 }
 </style>
@@ -140,9 +199,11 @@ a.plink:hover .title{color:var(--green)}
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
-    <span class="brand">EASTR5<em> · </em>BLOG</span>
-    <span class="tag">把和 AI 的讨论，整理成可回看的想法笔记</span>
-    <a href="https://github.com/Eastr5/blog" target="_blank" rel="noopener">GITHUB ↗</a>
+    <a class="brand" href="./">张世昌<em> · </em>SHAWN ZHANG</a>
+    <nav>
+      <a href="#about">关于</a><a href="#work">项目</a><a href="#writing">写作</a><a href="#experience">经历</a>
+    </nav>
+    <a class="gh" href="https://github.com/Eastr5" target="_blank" rel="noopener">GITHUB ↗</a>
   </div>
 </header>
 
@@ -150,7 +211,7 @@ a.plink:hover .title{color:var(--green)}
 
 <footer class="foot">
   <div class="wrap">
-    <span>EASTR5 · AI 笔记簿</span>
+    <span>张世昌 · SHAWN ZHANG</span>
     <span><a href="https://eastr5.github.io/blog/">eastr5.github.io/blog</a></span>
   </div>
 </footer>
@@ -162,17 +223,28 @@ const POSTS = [
   {file:"2026-11-12-ai-security", title:"AI 把攻防的时间差压到了小时级", date:"2026-11-12", series:"AI 产品", draft:true},
   {file:"2026-11-14-ai-sentinel", title:"AI 哨兵该站在哪：安全正在从一次付费变成按次付费", date:"2026-11-14", series:"AI 产品", draft:true},
 ];
+const PROJECTS = [
+  {name:"skill-router-v3", year:"2026 · 进行中",
+   desc:"零安装的 MCP-Skill-Tool 路由器。一个纯 Markdown 的 SKILL.md，让 AI 在自己的技能、MCP 和工具里选路。自建 38 条评测集，Top-1 86.7%，口径与波动都写在 README 里。",
+   links:[["GitHub","https://github.com/Eastr5/skill-router-v3"]]},
+  {name:"academic-tikz", year:"2025 · 维护",
+   desc:"把三个互相抢触发的 TikZ 绘图技能合并成一个入口，模板、脚本与 recipes 全部保留，重新设计的是路由。",
+   links:[["GitHub","https://github.com/Eastr5/academic-tikz"]]},
+  {name:"AI 笔记簿", year:"2026 · 本页",
+   desc:"把和 AI 的讨论整理成可回看的想法笔记。一篇只讲一个想法，重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。",
+   links:[["查看写作","#writing"]]},
+];
+const EXPERIENCE = [
+  {when:"2026.04 – 2026.07", what:"外资游戏公司 · AI 部门", desc:"AI 产品经理，负责海外投放方向。"},
+  {when:"2028 届 · 推免", what:"中央财经大学 · 产业经济学硕士", desc:"数字经济方向。"},
+  {when:"本科", what:"中央财经大学 · 电子商务", desc:"商务智能方向。"},
+];
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fmtDate = d => d.replaceAll("-",".");
 const app = document.getElementById("app");
 
-function mast(kickerNo, kickerText, h1, lede){
-  return `<p class="kicker"><span class="no">${kickerNo}</span> / ${kickerText}</p>
-    <h1 class="mast">${h1}</h1>${lede?`<p class="lede">${lede}</p>`:""}<hr class="rule">`;
-}
-
-function renderList(){
-  const rows = POSTS.map((p,i) => {
+function renderHome(){
+  const posts = POSTS.map((p,i) => {
     const no = String(POSTS.length - i).padStart(2,"0");
     return `<div class="post">
       <div class="body">
@@ -185,15 +257,67 @@ function renderList(){
       <div class="when">${fmtDate(p.date)}</div>
     </div>`;
   }).join("");
-  app.innerHTML = mast("01","AI 笔记簿","AI 笔记簿","一篇只讲一个想法；重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。")
-    + rows
-    + `<p class="footnote">共 ${POSTS.length} 篇 · 在 GitHub 上查看<a href="https://github.com/Eastr5/blog">源仓库 ↗</a></p>`;
+
+  app.innerHTML = `
+  <section id="about">
+    <p class="kicker"><span class="no">01</span> / 关于</p>
+    <h1 class="hero-name">张世昌<span class="latin">Shawn Zhang</span></h1>
+    <p class="hero-lede">AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。</p>
+    <div class="hero-text">
+      <p>中央财经大学电子商务本科（商务智能方向），校内推免至产业经济学硕士（数字经济方向）。2026 年 4 月到 7 月，在一家外资游戏公司新建的 AI 部门做 AI 产品经理，负责海外投放方向。</p>
+      <p>做产品时我更在意两件事：把表面需求剥成真实需求，判断哪些交给模型、哪些不交；以及一个功能该不该做，上线后用什么判断它有效。业余时间把和 AI 的讨论整理成笔记，顺手做几个零安装的小工具。</p>
+    </div>
+    <div class="tags">
+      <span class="pill">Text2SQL</span><span class="pill">Agent 系统设计</span>
+      <span class="pill">评测 / Evals</span><span class="pill">SQL · Python · n8n</span>
+    </div>
+    <div class="links"><a href="https://github.com/Eastr5">GitHub ↗</a><a href="#writing">看写作 ↓</a></div>
+  </section>
+  <hr class="rule">
+
+  <section id="work">
+    <p class="kicker"><span class="no">02</span> / 项目</p>
+    <h2 class="sec">做过的东西</h2>
+    ${PROJECTS.map(p => `
+      <div class="project">
+        <div class="p-top"><h3>${esc(p.name)}</h3><span class="year">${p.year}</span></div>
+        <p>${esc(p.desc)}</p>
+        <div class="p-meta">${p.links.map(l => `<a href="${l[1]}">${l[0]} ↗</a>`).join("")}</div>
+      </div>`).join("")}
+  </section>
+  <hr class="rule">
+
+  <section id="writing">
+    <p class="kicker"><span class="no">03</span> / 写作</p>
+    <h2 class="sec">AI 笔记簿</h2>
+    ${posts}
+    <p style="color:var(--muted);font-size:12.5px;margin-top:22px">共 ${POSTS.length} 篇 · 源仓库在 <a href="https://github.com/Eastr5/blog">GitHub ↗</a></p>
+  </section>
+  <hr class="rule">
+
+  <section id="experience">
+    <p class="kicker"><span class="no">04</span> / 经历</p>
+    <h2 class="sec">简短版本</h2>
+    <ul class="tl">
+      ${EXPERIENCE.map(e => `<li><div class="when">${esc(e.when)}</div><div class="what">${esc(e.what)}</div><p class="desc">${esc(e.desc)}</p></li>`).join("")}
+    </ul>
+  </section>
+  <hr class="rule">
+
+  <section id="contact">
+    <p class="kicker"><span class="no">05</span> / 联系</p>
+    <h2 class="sec">聊聊</h2>
+    <div class="contact">
+      <p>想聊 AI 产品、数据与风控，或者 skills 治理，欢迎来 GitHub 找我。</p>
+      <div class="links"><a href="https://github.com/Eastr5">GitHub ↗</a><a href="https://github.com/Eastr5/blog">博客源仓库 ↗</a></div>
+    </div>
+  </section>`;
 }
 
 async function renderPost(slug){
   const idx = POSTS.findIndex(x => x.file === slug);
   const p = POSTS[idx];
-  if(!p){ app.innerHTML = mast("00","AI 笔记簿","文章不存在","") + `<a class="back" href="./">← 返回列表</a>`; return; }
+  if(!p){ app.innerHTML = `<p class="kicker"><span class="no">00</span> / 文章</p><h2 class="sec">文章不存在</h2><a class="back" href="./">← 返回主页</a>`; return; }
   const no = String(POSTS.length - idx).padStart(2,"0");
   app.innerHTML = '<p class="loading">正在加载正文…</p>';
   let meta = {};
@@ -206,7 +330,7 @@ async function renderPost(slug){
   }catch(e){/* 元数据缺失时静默降级 */}
   let md;
   try{ md = await (await fetch(`posts/${slug}.md`)).text(); }
-  catch(e){ app.innerHTML = mast(no, meta.kicker||p.series, esc(p.title), "") + "<p>正文加载失败。</p><a class='back' href='./'>← 返回列表</a>"; return; }
+  catch(e){ app.innerHTML = `<h2 class="sec" style="font-size:28px">${esc(p.title)}</h2><p>正文加载失败。</p><a class="back" href="./">← 返回主页</a>`; return; }
   md = md.replaceAll("../assets/", "assets/");
   const picture = md.match(/<picture>[\s\S]*?<\/picture>/);
   md = md.replace(/<picture>[\s\S]*?<\/picture>\s*/,"");
@@ -214,7 +338,7 @@ async function renderPost(slug){
   const mins = Math.max(1, Math.round(md.replace(/<[^>]+>/g,"").length/500));
   app.innerHTML = `
     <p class="kicker"><span class="no">${no}</span> / ${esc(meta.kicker || p.series)}</p>
-    <h1 class="mast">${esc(meta.title || p.title)}</h1>
+    <h2 class="sec" style="border:0;padding:0;font-size:30px;margin-bottom:10px">${esc(meta.title || p.title)}</h2>
     ${meta.subtitle?`<p class="subtitle">${esc(meta.subtitle)}</p>`:""}
     <div class="meta">
       <span>${fmtDate(p.date)}</span><span>·</span>
@@ -224,11 +348,11 @@ async function renderPost(slug){
     </div>
     ${picture?`<div class="hero">${picture[0]}</div>`:""}
     <div class="body">${body}</div>
-    <a class="back" href="./">← 返回列表</a>`;
+    <a class="back" href="./">← 返回主页</a>`;
 }
 
 const slug = new URLSearchParams(location.search).get("post");
-slug ? renderPost(slug) : renderList();
+slug ? renderPost(slug) : renderHome();
 </script>
 </body>
 </html>
