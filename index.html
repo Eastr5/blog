@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>张世昌 Shawn Zhang · AI 产品经理</title>
 <meta name="description" content="张世昌（Shawn Zhang），AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。中央财经大学电子商务本科、产业经济学硕士（数字经济方向）。这里是我的个人主页与 AI 笔记簿。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F4B32'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='25' letter-spacing='1' fill='%23F2F1EC' text-anchor='middle'%3ESZ%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#191917" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="张世昌 Shawn Zhang · AI 产品经理">
+<meta property="og:description" content="AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。这里是我的个人主页与 AI 笔记簿。">
+<meta property="og:image" content="https://eastr5.github.io/blog/assets/cards/2026-11-14-ai-sentinel-light.png">
+<meta name="twitter:card" content="summary_large_image">
 <script src="assets/js/marked.min.js"></script>
 <style>
 :root{
@@ -21,6 +29,8 @@
   }
 }
 *{box-sizing:border-box}
+::selection{background:var(--green-soft); color:var(--ink)}
+:focus-visible{outline:2px solid var(--green); outline-offset:3px}
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
 body{
   margin:0; background:var(--paper); color:var(--ink);
@@ -66,14 +76,23 @@ main{padding:58px 0 30px}
 .sechead .line{flex:1; height:1px; background:var(--line)}
 h2.sec{
   font-family:var(--serif); font-size:27px; line-height:1.45; font-weight:700;
-  margin:0 0 26px; letter-spacing:.5px;
+  margin:0 0 26px; letter-spacing:.5px; text-wrap:balance;
 }
 section{margin-bottom:66px}
+/* 最近：一条编者按式短注 */
+.now{
+  margin:26px 0 0; padding:2px 0 2px 16px; border-left:2px solid var(--tan);
+  font-size:13.5px; color:var(--soft); line-height:1.95;
+}
+.now .k{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:3px; color:var(--tan);
+  margin-right:10px;
+}
 
 /* Hero */
 h1.hero{
   font-family:var(--serif); font-size:50px; line-height:1.25; font-weight:700;
-  margin:0 0 4px; letter-spacing:2px;
+  margin:0 0 4px; letter-spacing:2px; text-wrap:balance;
 }
 .hero-latin{
   font-family:var(--serif); font-style:italic; font-size:22px; color:var(--muted);
@@ -193,6 +212,27 @@ a.rowlink:hover h3{color:var(--green)}
 }
 .loading{color:var(--muted); padding:60px 0; text-align:center; letter-spacing:2px; font-size:12px}
 
+/* 文章翻页 */
+.pager{
+  display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:56px;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.pager a{
+  padding:18px 4px; border-bottom:0; display:block;
+}
+.pager a:hover{border-bottom:0}
+.pager a:hover b{color:var(--green)}
+.pager a + a{border-left:1px solid var(--line); padding-left:22px; text-align:right}
+.pager .lab{
+  display:block; font-family:var(--mono); font-size:10px; letter-spacing:2.5px;
+  color:var(--muted); margin-bottom:6px;
+}
+.pager b{
+  font-family:var(--serif); font-size:15px; font-weight:700; line-height:1.6;
+  display:block; letter-spacing:.2px;
+}
+.pager .one{grid-column:1 / -1; text-align:left; padding-left:4px}
+
 /* 版权页式页脚 */
 .foot{padding:10px 0 54px; text-align:center}
 .foot .ornament{
@@ -207,8 +247,9 @@ a.rowlink:hover h3{color:var(--green)}
 }
 .foot a{border-bottom:1px solid var(--line)}
 @media (max-width:640px){
-  .masthead nav{flex-wrap:wrap; gap:0}
-  .masthead nav a{padding:2px 12px; font-size:10.5px}
+  .masthead{padding-top:26px}
+  .masthead nav{flex-wrap:wrap; gap:0; padding:8px 0}
+  .masthead nav a{padding:4px 10px; font-size:10px; letter-spacing:2px}
   h1.hero{font-size:38px}
   .statement{font-size:18px}
   h2.sec{font-size:23px}
@@ -216,6 +257,17 @@ a.rowlink:hover h3{color:var(--green)}
   .cv-row{grid-template-columns:1fr; gap:2px}
   .cv-row dt{padding-top:0}
   .entry .desc,.entry .more,.kind{margin-left:0}
+  .pager{grid-template-columns:1fr}
+  .pager a + a{border-left:0; border-top:1px solid var(--line); padding-left:4px; text-align:left}
+}
+/* 打印：当作一页纸 */
+@media print{
+  .topline,.masthead nav,.foot,.back,.pager,.links{display:none}
+  body{background:#fff; color:#000}
+  main{padding-top:0}
+  section{margin-bottom:32px}
+  a{color:#000; border-bottom:0}
+  .entry,.cv-row,.pager{border-color:#999}
 }
 </style>
 </head>
@@ -307,6 +359,7 @@ function renderHome(){
       <p>中央财经大学电子商务本科（商务智能方向），校内推免至产业经济学硕士（数字经济方向）。2026 年 4 月到 7 月，在一家外资游戏公司新建的 AI 部门做 AI 产品经理，负责海外投放方向。</p>
       <p>做产品时我更在意两件事：把表面需求剥成真实需求，判断哪些交给模型、哪些不交；以及一个功能该不该做，上线后用什么判断它有效。业余时间把和 AI 的讨论整理成笔记，顺手做几个零安装的小工具。</p>
     </div>
+    <p class="now"><span class="k">最近</span>在 skill-router-v3 上补评测，接下来想做 v4 的检索化验证。</p>
     <div class="focus">
       <span class="k">关注</span>
       ${FOCUS.map((f,i) => (i?'<span class="s">/</span>':'') + `<span>${esc(f)}</span>`).join("")}
@@ -363,6 +416,11 @@ async function renderPost(slug){
   md = md.replace(/<picture>[\s\S]*?<\/picture>\s*/,"");
   const body = marked.parse(md);
   const mins = Math.max(1, Math.round(md.replace(/<[^>]+>/g,"").length/500));
+  const older = POSTS[idx+1], newer = POSTS[idx-1];
+  const plinks = [];
+  if(older) plinks.push(`<a href="?post=${older.file}"><span class="lab">← 上一篇</span><b>${esc(older.title)}</b></a>`);
+  if(newer) plinks.push(`<a href="?post=${newer.file}"><span class="lab">下一篇 →</span><b>${esc(newer.title)}</b></a>`);
+  const pager = plinks.length ? `<nav class="pager${plinks.length===1?" one":""}">${plinks.join("")}</nav>` : "";
   app.innerHTML = `
     ${sechead(no, esc(meta.kicker || p.series))}
     <h2 class="sec" style="font-size:31px;margin-bottom:12px">${esc(meta.title || p.title)}</h2>
@@ -375,6 +433,7 @@ async function renderPost(slug){
     </div>
     ${picture?`<div class="hero-img">${picture[0]}</div>`:""}
     <div class="body">${body}</div>
+    ${pager}
     <a class="back" href="./">← 返回主页</a>`;
 
   foot.innerHTML = `
