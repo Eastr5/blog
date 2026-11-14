@@ -41,6 +41,8 @@ a:hover{color:var(--green); border-bottom-color:var(--green); text-decoration:no
   font-family:var(--serif); font-size:16px; letter-spacing:6px; font-weight:700;
   border-bottom:0;
 }
+.wordmark .mono-mark{letter-spacing:4px; color:var(--ink)}
+.wordmark:hover .mono-mark{color:var(--green)}
 .wordmark em{
   display:block; font-style:normal; font-size:10.5px; letter-spacing:5px;
   color:var(--muted); font-weight:400; margin-top:8px;
@@ -221,7 +223,7 @@ a.rowlink:hover h3{color:var(--green)}
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
-    <a class="wordmark" href="./">张世昌<em>SHAWN ZHANG · 个人主页</em></a>
+    <a class="wordmark" href="./"><span class="mono-mark">S ／ Z</span><em>SHAWN ZHANG · 个人主页</em></a>
     <nav>
       <a href="#about">关于</a><a href="#work">项目</a><a href="#writing">写作</a><a href="#experience">经历</a>
       <a href="https://github.com/Eastr5" target="_blank" rel="noopener">GitHub</a>
@@ -256,7 +258,7 @@ const CV = [
   {when:"2028 届 · 推免", what:"中央财经大学 · 产业经济学硕士", desc:"数字经济方向"},
   {when:"本科", what:"中央财经大学 · 电子商务", desc:"商务智能方向"},
 ];
-const FOCUS = ["Text2SQL","Agent 系统设计","评测 / Evals","SQL · Python · n8n"];
+const FOCUS = ["Text2SQL","Agent 系统设计","评测 · Evals","SQL · Python · n8n"];
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const fmtDate = d => d.replaceAll("-",".");
 const app = document.getElementById("app");
