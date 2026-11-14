@@ -3,83 +3,158 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eastr5 · Blog</title>
+<title>AI 笔记簿 · Eastr5</title>
 <script src="assets/js/marked.min.js"></script>
 <style>
 :root{
-  --bg:#F7F6F3; --panel:#FFFFFF; --border:#E2E0DA; --text:#24292F;
-  --muted:#8A8578; --acc:#1F7A52; --acc-soft:#E8F0EB;
+  --paper:#F5F6F4; --ink:#1A1A1A; --muted:#8A8A8A; --line:#D8D8D4;
+  --green:#1F7A52; --green-deep:#0F4B32; --green-soft:#E5EFE8;
+  --tan:#B87333; --panel:#FFFFFF;
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --bg:#1C1C1A; --panel:#232320; --border:#33322E; --text:#E8E6E1;
-    --muted:#96917F; --acc:#4CAF82; --acc-soft:#1B2721;
+    --paper:#1C1C1A; --ink:#E8E6E1; --muted:#96917F; --line:#33322E;
+    --green:#4CAF82; --green-deep:#0E2E20; --green-soft:#1B2721;
+    --tan:#D19A5E; --panel:#232320;
   }
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 body{
-  margin:0; background:var(--bg); color:var(--text);
-  font:16px/1.85 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  margin:0; background:var(--paper); color:var(--ink);
+  font:16px/1.9 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:720px; margin:0 auto; padding:56px 20px 80px}
-a{color:var(--acc); text-decoration:none}
+a{color:var(--green); text-decoration:none}
 a:hover{text-decoration:underline}
-.brand{
-  font-family:Georgia,"Noto Serif SC","Source Han Serif SC",serif;
-  font-size:34px; font-weight:700; letter-spacing:.5px; margin:0;
+.wrap{max-width:740px; margin:0 auto; padding:0 22px}
+
+/* 双色顶线：编辑部签名 */
+.topline{height:4px; background:var(--green)}
+.topline+.topline{height:4px; background:var(--tan)}
+
+/* 深绿报头 */
+.masthead{background:var(--green-deep); color:#F2F1EC}
+.masthead .wrap{
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding-top:16px; padding-bottom:16px; gap:16px;
 }
-.brand .dot{color:var(--acc)}
-.tagline{color:var(--muted); margin:10px 0 0; font-size:15px}
-.rule{height:3px; width:56px; background:var(--acc); border:0; margin:26px 0 34px}
+.masthead .brand{
+  font-size:13px; letter-spacing:4px; font-weight:700; color:#F2F1EC;
+}
+.masthead .brand em{font-style:normal; color:#D9A96B}
+.masthead .tag{
+  font-size:12.5px; color:#B9C9BE; letter-spacing:1px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.masthead a{color:#D9A96B; font-size:12.5px; letter-spacing:2px}
+.masthead a:hover{color:#F2F1EC; text-decoration:none}
+
+main{padding-top:52px; padding-bottom:72px}
+.kicker{
+  font-size:12.5px; letter-spacing:3px; color:var(--green);
+  font-weight:700; margin:0 0 14px;
+}
+.kicker .no{color:var(--tan)}
+h1.mast{
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:38px; line-height:1.35; font-weight:700; margin:0 0 12px;
+  border-left:5px solid var(--green); padding-left:18px;
+}
+.lede{color:var(--muted); margin:0 0 8px; font-size:15.5px}
+.rule{height:1px; background:var(--line); border:0; margin:34px 0 0}
+
 /* 文章列表 */
-.post{
-  display:block; padding:22px 0; border-bottom:1px solid var(--border);
-}
-.post .date{font-size:13px; color:var(--muted); letter-spacing:1px}
+.post{display:flex; gap:22px; padding:26px 0; border-bottom:1px solid var(--line)}
+.post .body{flex:1; min-width:0}
+.post .kick{font-size:11.5px; letter-spacing:2px; color:var(--green); font-weight:700}
 .post .title{
-  font-family:Georgia,"Noto Serif SC","Source Han Serif SC",serif;
-  font-size:21px; font-weight:700; line-height:1.5; margin:6px 0 8px;
-  color:var(--text);
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:21.5px; font-weight:700; line-height:1.5; margin:7px 0 9px; color:var(--ink);
 }
-a.plink:hover .title{color:var(--acc); text-decoration:none}
-.badges{font-size:12.5px; color:var(--muted)}
-.badges .series{color:var(--acc)}
-.badges .draft{
-  border:1px solid var(--acc); color:var(--acc); border-radius:3px;
-  padding:1px 7px; margin-left:8px; font-size:11.5px;
+a.plink:hover{text-decoration:none}
+a.plink:hover .title{color:var(--green)}
+.post .meta{font-size:12.5px; color:var(--muted); display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.post .when{font-size:12px; color:var(--muted); letter-spacing:1.5px; white-space:nowrap; padding-top:6px}
+.pill{
+  display:inline-block; background:var(--green-soft); color:var(--green);
+  border-radius:999px; padding:2px 12px; font-size:12px; letter-spacing:.5px;
 }
+.draft{
+  display:inline-block; border:1px solid var(--tan); color:var(--tan);
+  border-radius:999px; padding:1px 10px; font-size:11.5px;
+}
+.footnote{color:var(--muted); font-size:12.5px; margin-top:26px}
+
 /* 文章页 */
-.kicker{font-size:13px; letter-spacing:2px; color:var(--acc); font-weight:600}
-h1.title{
-  font-family:Georgia,"Noto Serif SC","Source Han Serif SC",serif;
-  font-size:30px; line-height:1.45; margin:10px 0 6px;
+.subtitle{color:var(--muted); font-size:15.5px; margin:0 0 10px}
+.meta{color:var(--muted); font-size:12.5px; letter-spacing:1px; margin-bottom:30px;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.hero{
+  background:var(--green-soft); border-radius:10px; padding:18px; margin:0 0 38px;
 }
-.subtitle{color:var(--muted); font-size:15.5px; margin:0 0 6px}
-.meta{color:var(--muted); font-size:13px; margin-bottom:30px}
-.hero{margin:0 0 34px}
-.hero img{width:100%; border:1px solid var(--border); border-radius:8px; display:block}
+.hero img{width:100%; border-radius:6px; display:block}
+.body{font-size:16.5px; line-height:1.9}
 .body h2{
-  font-family:Georgia,"Noto Serif SC","Source Han Serif SC",serif;
-  font-size:21px; margin:38px 0 14px; padding-left:12px;
-  border-left:4px solid var(--acc); line-height:1.4;
+  font-family:Georgia,"Noto Serif SC","Source Han Serif SC","STSong",serif;
+  font-size:22px; line-height:1.4; margin:44px 0 16px;
+  border-left:4px solid var(--green); padding-left:14px;
 }
-.body h3{font-size:17.5px; margin:26px 0 10px}
-.body p{margin:14px 0}
-.body ul,.body ol{padding-left:24px}
-.body li{margin:8px 0}
-.body strong{color:var(--text)}
+.body h3{font-size:17.5px; margin:28px 0 12px}
+.body p{margin:16px 0}
+.body ul,.body ol{padding-left:26px; margin:16px 0}
+.body li{margin:10px 0}
 .body blockquote{
-  margin:18px 0; padding:2px 18px; color:var(--muted);
-  border-left:3px solid var(--border);
+  margin:20px 0; padding:12px 20px; background:var(--green-soft);
+  border-left:3px solid var(--green); border-radius:0 6px 6px 0; color:var(--ink);
 }
-.body code{background:var(--acc-soft); padding:2px 6px; border-radius:4px; font-size:.9em}
-.back{display:inline-block; margin-top:48px; font-size:14px}
+.body blockquote p{margin:6px 0}
+.body code{
+  background:var(--green-soft); padding:2px 7px; border-radius:4px;
+  font-size:.88em; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+.body pre{background:#141414; color:#DDE6DF; border-radius:8px; padding:16px 18px; overflow:auto}
+.body pre code{background:none; color:inherit; padding:0}
+.body img{max-width:100%}
+.back{
+  display:inline-block; margin-top:52px; font-size:13.5px; letter-spacing:1px;
+  border-top:1px solid var(--line); padding-top:18px; width:100%;
+}
 .loading{color:var(--muted); padding:60px 0; text-align:center}
+
+/* 页脚 */
+.foot{background:var(--green-deep); color:#B9C9BE}
+.foot .wrap{
+  display:flex; justify-content:space-between; gap:16px;
+  padding-top:18px; padding-bottom:18px; font-size:12px; letter-spacing:1.5px;
+}
+.foot a{color:#D9A96B}
+@media (max-width:640px){
+  .masthead .tag{display:none}
+  h1.mast{font-size:30px}
+  .post .when{display:none}
+}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"><p class="loading">加载中…</p></div>
+<div class="topline"></div><div class="topline"></div>
+<header class="masthead">
+  <div class="wrap">
+    <span class="brand">EASTR5<em> · </em>BLOG</span>
+    <span class="tag">把和 AI 的讨论，整理成可回看的想法笔记</span>
+    <a href="https://github.com/Eastr5/blog" target="_blank" rel="noopener">GITHUB ↗</a>
+  </div>
+</header>
+
+<main class="wrap" id="app"><p class="loading">加载中…</p></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>EASTR5 · AI 笔记簿</span>
+    <span><a href="https://eastr5.github.io/blog/">eastr5.github.io/blog</a></span>
+  </div>
+</footer>
+
 <script>
 const POSTS = [
   {file:"2026-11-09-academic-tikz-merge", title:"Skills 花样众多，损耗的是注意力，边际效益会下降", date:"2026-11-09", series:"AI 产品", draft:true},
@@ -88,27 +163,39 @@ const POSTS = [
   {file:"2026-11-14-ai-sentinel", title:"AI 哨兵该站在哪：安全正在从一次付费变成按次付费", date:"2026-11-14", series:"AI 产品", draft:true},
 ];
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const fmtDate = d => d.replaceAll("-",".");
 const app = document.getElementById("app");
 
-function header(){
-  return `<h1 class="brand">Eastr5<span class="dot"> · </span>Blog</h1>
-    <p class="tagline">把和 AI 的讨论，整理成可回看的想法笔记。一篇只讲一个想法；重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。</p>
-    <hr class="rule">`;
+function mast(kickerNo, kickerText, h1, lede){
+  return `<p class="kicker"><span class="no">${kickerNo}</span> / ${kickerText}</p>
+    <h1 class="mast">${h1}</h1>${lede?`<p class="lede">${lede}</p>`:""}<hr class="rule">`;
 }
 
 function renderList(){
-  app.innerHTML = header() + POSTS.map(p => `
-    <a class="post plink" href="?post=${p.file}">
-      <div class="date">${p.date}</div>
-      <div class="title">${esc(p.title)}</div>
-      <div class="badges"><span class="series">${p.series}</span>${p.draft?'<span class="draft">草稿</span>':''}</div>
-    </a>`).join("");
+  const rows = POSTS.map((p,i) => {
+    const no = String(POSTS.length - i).padStart(2,"0");
+    return `<div class="post">
+      <div class="body">
+        <a class="plink" href="?post=${p.file}">
+          <div class="kick">${no} · ${p.series}</div>
+          <div class="title">${esc(p.title)}</div>
+        </a>
+        <div class="meta"><span class="pill">${p.series}</span>${p.draft?'<span class="draft">草稿</span>':''}</div>
+      </div>
+      <div class="when">${fmtDate(p.date)}</div>
+    </div>`;
+  }).join("");
+  app.innerHTML = mast("01","AI 笔记簿","AI 笔记簿","一篇只讲一个想法；重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。")
+    + rows
+    + `<p class="footnote">共 ${POSTS.length} 篇 · 在 GitHub 上查看<a href="https://github.com/Eastr5/blog">源仓库 ↗</a></p>`;
 }
 
 async function renderPost(slug){
-  const p = POSTS.find(x => x.file === slug);
-  if(!p){ app.innerHTML = header() + "<p>文章不存在。</p><a class='back' href='./'>← 返回列表</a>"; return; }
-  app.innerHTML = header() + '<p class="loading">正在加载正文…</p>';
+  const idx = POSTS.findIndex(x => x.file === slug);
+  const p = POSTS[idx];
+  if(!p){ app.innerHTML = mast("00","AI 笔记簿","文章不存在","") + `<a class="back" href="./">← 返回列表</a>`; return; }
+  const no = String(POSTS.length - idx).padStart(2,"0");
+  app.innerHTML = '<p class="loading">正在加载正文…</p>';
   let meta = {};
   try{
     const y = await (await fetch(`posts/meta/${slug}.yaml`)).text();
@@ -119,16 +206,22 @@ async function renderPost(slug){
   }catch(e){/* 元数据缺失时静默降级 */}
   let md;
   try{ md = await (await fetch(`posts/${slug}.md`)).text(); }
-  catch(e){ app.innerHTML = header() + "<p>正文加载失败。</p><a class='back' href='./'>← 返回列表</a>"; return; }
+  catch(e){ app.innerHTML = mast(no, meta.kicker||p.series, esc(p.title), "") + "<p>正文加载失败。</p><a class='back' href='./'>← 返回列表</a>"; return; }
   md = md.replaceAll("../assets/", "assets/");
   const picture = md.match(/<picture>[\s\S]*?<\/picture>/);
   md = md.replace(/<picture>[\s\S]*?<\/picture>\s*/,"");
   const body = marked.parse(md);
-  app.innerHTML = header() + `
-    <p class="kicker">${esc(meta.kicker || p.series)}</p>
-    <h1 class="title">${esc(meta.title || p.title)}</h1>
+  const mins = Math.max(1, Math.round(md.replace(/<[^>]+>/g,"").length/500));
+  app.innerHTML = `
+    <p class="kicker"><span class="no">${no}</span> / ${esc(meta.kicker || p.series)}</p>
+    <h1 class="mast">${esc(meta.title || p.title)}</h1>
     ${meta.subtitle?`<p class="subtitle">${esc(meta.subtitle)}</p>`:""}
-    <p class="meta">${p.date} · ${p.series}${p.draft?" · 草稿":""}</p>
+    <div class="meta">
+      <span>${fmtDate(p.date)}</span><span>·</span>
+      <span class="pill">${p.series}</span><span>·</span>
+      <span>约 ${mins} 分钟</span>
+      ${p.draft?'<span class="draft">草稿</span>':''}
+    </div>
     ${picture?`<div class="hero">${picture[0]}</div>`:""}
     <div class="body">${body}</div>
     <a class="back" href="./">← 返回列表</a>`;
