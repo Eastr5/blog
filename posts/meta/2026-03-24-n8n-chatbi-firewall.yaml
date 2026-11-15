@@ -1,0 +1,13 @@
+title: 让 AI 查数据库，它却先改写了我的指令
+palette: warm
+subtitle: 用 n8n 搭 ChatBI 时踩到的一个安全盲区
+date: 2026-03-24
+tags: [AI产品, 安全, ChatBI]
+source: 一次真实的 n8n + DeepSeek 搭建经历
+status: published
+series: AI 产品
+kicker: AI 与安全
+questions:
+  - 为什么专门写的 AST 防火墙一次都没触发？
+  - 模型聪明到会自己改写危险指令，是好事吗？
+  - 怎样把安全边界从 Prompt 移到架构上？
