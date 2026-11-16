@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>张世昌 Shawn Zhang · AI 产品经理</title>
-<meta name="description" content="张世昌（Shawn Zhang），AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。中央财经大学电子商务本科、产业经济学硕士（数字经济方向）。这里是我的个人主页与 AI 笔记簿。">
+<title>Shawn Zhang · AI Product Manager | Internship</title>
+<meta name="description" content="Shawn Zhang (张世昌), AI product manager and MSc candidate in Digital Economics at CUFE, graduating 2028. Open to internships in AI product, data systems and risk. Selected work, writing and background.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230F4B32'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='25' letter-spacing='1' fill='%23F2F1EC' text-anchor='middle'%3ESZ%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#F6F5F1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#191917" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="张世昌 Shawn Zhang · AI 产品经理">
-<meta property="og:description" content="AI 产品经理，关注 AI 与具体场景，尤其是增长和风控。这里是我的个人主页与 AI 笔记簿。">
+<meta property="og:title" content="Shawn Zhang · AI Product Manager">
+<meta property="og:description" content="AI product manager and MSc candidate in Digital Economics at CUFE. Open to internships in AI product, data systems and risk.">
 <meta property="og:image" content="https://eastr5.github.io/blog/assets/cards/2026-11-14-ai-sentinel-light.png">
 <meta name="twitter:card" content="summary_large_image">
 <script src="assets/js/marked.min.js"></script>
@@ -47,6 +47,7 @@ a:hover{color:var(--green); border-bottom-color:var(--green); text-decoration:no
 .topline+.topline{height:2px; background:var(--tan)}
 
 .masthead{padding:34px 0 0; text-align:center}
+.masthead .wrap{position:relative}
 .wordmark{
   font-family:var(--serif); font-size:16px; letter-spacing:6px; font-weight:700;
   border-bottom:0;
@@ -57,6 +58,15 @@ a:hover{color:var(--green); border-bottom-color:var(--green); text-decoration:no
   display:block; font-style:normal; font-size:10.5px; letter-spacing:5px;
   color:var(--muted); font-weight:400; margin-top:8px;
 }
+.lang{
+  position:absolute; right:0; top:2px; font-family:var(--mono);
+  font-size:10.5px; letter-spacing:1.5px; color:var(--muted);
+  display:flex; gap:8px; align-items:baseline;
+}
+.lang b{color:var(--green); font-weight:700}
+.lang a{cursor:pointer; border-bottom:0}
+.lang a:hover{color:var(--green); border-bottom:0}
+.lang .sep{color:var(--line)}
 .masthead nav{
   margin:20px 0 0; padding:12px 0; border-top:1px solid var(--line);
   display:flex; justify-content:center; gap:0; font-size:11.5px; letter-spacing:3px;
@@ -67,7 +77,6 @@ a:hover{color:var(--green); border-bottom-color:var(--green); text-decoration:no
 .masthead nav a:hover{color:var(--green)}
 
 main{padding:58px 0 30px}
-/* 章头：编号 + 名称 + 细线 */
 .sechead{
   display:flex; align-items:center; gap:12px; margin:0 0 8px;
   font-family:var(--mono); font-size:11px; letter-spacing:2.5px; color:var(--tan);
@@ -79,15 +88,24 @@ h2.sec{
   margin:0 0 26px; letter-spacing:.5px; text-wrap:balance;
 }
 section{margin-bottom:66px}
-/* 最近：一条编者按式短注 */
-.now{
-  margin:26px 0 0; padding:2px 0 2px 16px; border-left:2px solid var(--tan);
-  font-size:13.5px; color:var(--soft); line-height:1.95;
+
+/* 求职意向 / 事实条 */
+.available{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:10px 0; margin:0 0 30px;
+  font-size:13px; color:var(--soft);
 }
-.now .k{
-  font-family:var(--mono); font-size:10.5px; letter-spacing:3px; color:var(--tan);
-  margin-right:10px;
+.available .k{
+  font-family:var(--mono); font-size:10px; letter-spacing:2.5px;
+  color:var(--tan); white-space:nowrap;
 }
+.available .flag{color:var(--green); font-weight:700; letter-spacing:1px}
+.facts{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:1.5px; color:var(--muted);
+  margin:0 0 26px; line-height:2;
+}
+.facts .s{color:var(--line); margin:0 10px}
 
 /* Hero */
 h1.hero{
@@ -105,8 +123,14 @@ h1.hero{
 .statement .hl{color:var(--green)}
 .hero-text{font-size:15px; line-height:2; color:var(--soft)}
 .hero-text p{margin:0 0 16px}
-
-/* 关注条：细线框住的字排版，不用胶囊 */
+.now{
+  margin:26px 0 0; padding:2px 0 2px 16px; border-left:2px solid var(--tan);
+  font-size:13.5px; color:var(--soft); line-height:1.95;
+}
+.now .k{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:3px; color:var(--tan);
+  margin-right:10px;
+}
 .focus{
   border-top:1px solid var(--line); border-bottom:1px solid var(--line);
   padding:11px 2px; margin:28px 0 26px; display:flex; flex-wrap:wrap;
@@ -115,13 +139,11 @@ h1.hero{
 }
 .focus .k{color:var(--tan); letter-spacing:3px; margin-right:6px}
 .focus .s{color:var(--line)}
-.focus span:not(.k):not(.s):hover{color:var(--green)}
-
 .links{font-size:12.5px; letter-spacing:2.5px; color:var(--muted); margin-top:4px}
 .links a{border-bottom:1px solid var(--line)}
 .links a:hover{border-bottom-color:var(--green)}
 
-/* 索引式条目（项目 / 写作通用） */
+/* 索引式条目 */
 .entry{border-top:1px solid var(--line); padding:24px 0 22px}
 .entry:last-child{border-bottom:1px solid var(--line)}
 .entry .head{display:flex; align-items:baseline; gap:14px}
@@ -141,8 +163,6 @@ h1.hero{
 .entry .more{margin:10px 0 0 38px; font-size:12px; letter-spacing:2px; color:var(--muted)}
 .entry .more a{border-bottom:1px solid var(--line)}
 .entry .more a:hover{border-bottom-color:var(--green)}
-
-/* 写作条目：标题链接覆盖整行 */
 a.rowlink{display:block; border-bottom:0}
 a.rowlink:hover{border-bottom:0; color:inherit}
 a.rowlink:hover h3{color:var(--green)}
@@ -151,8 +171,12 @@ a.rowlink:hover h3{color:var(--green)}
   display:block; margin:8px 0 0 38px;
 }
 .kind .draft{color:var(--tan)}
+.section-note{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:1.5px;
+  color:var(--muted); margin:-14px 0 22px; line-height:1.9;
+}
 
-/* 经历：定义列表，两栏 */
+/* 经历 */
 .cv{border-top:1px solid var(--line)}
 .cv-row{
   display:grid; grid-template-columns:158px 1fr; gap:6px 24px;
@@ -183,6 +207,10 @@ a.rowlink:hover h3{color:var(--green)}
   margin-bottom:34px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;
 }
 .meta .draft{color:var(--tan)}
+.notice{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:1.5px; color:var(--tan);
+  border-left:2px solid var(--tan); padding-left:14px; margin:0 0 24px; line-height:1.9;
+}
 .hero-img{margin:0 0 24px}
 .hero-img img{width:100%; display:block}
 .body{font-size:16.5px; line-height:2}
@@ -217,9 +245,7 @@ a.rowlink:hover h3{color:var(--green)}
   display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:56px;
   border-top:1px solid var(--line); border-bottom:1px solid var(--line);
 }
-.pager a{
-  padding:18px 4px; border-bottom:0; display:block;
-}
+.pager a{padding:18px 4px; border-bottom:0; display:block}
 .pager a:hover{border-bottom:0}
 .pager a:hover b{color:var(--green)}
 .pager a + a{border-left:1px solid var(--line); padding-left:22px; text-align:right}
@@ -235,12 +261,8 @@ a.rowlink:hover h3{color:var(--green)}
 
 /* 版权页式页脚 */
 .foot{padding:10px 0 54px; text-align:center}
-.foot .ornament{
-  color:var(--tan); font-size:13px; letter-spacing:8px; margin-bottom:16px;
-}
-.foot .fm{
-  font-family:var(--serif); font-size:14px; letter-spacing:2px; margin:0 0 6px;
-}
+.foot .ornament{color:var(--tan); font-size:13px; letter-spacing:8px; margin-bottom:16px}
+.foot .fm{font-family:var(--serif); font-size:14px; letter-spacing:2px; margin:0 0 6px}
 .foot .fs{
   font-family:var(--mono); font-size:10.5px; letter-spacing:2px; color:var(--muted);
   line-height:2.1; margin:0;
@@ -248,6 +270,7 @@ a.rowlink:hover h3{color:var(--green)}
 .foot a{border-bottom:1px solid var(--line)}
 @media (max-width:640px){
   .masthead{padding-top:26px}
+  .lang{position:static; justify-content:center; margin-top:12px}
   .masthead nav{flex-wrap:wrap; gap:0; padding:8px 0}
   .masthead nav a{padding:4px 10px; font-size:10px; letter-spacing:2px}
   h1.hero{font-size:38px}
@@ -260,9 +283,8 @@ a.rowlink:hover h3{color:var(--green)}
   .pager{grid-template-columns:1fr}
   .pager a + a{border-left:0; border-top:1px solid var(--line); padding-left:4px; text-align:left}
 }
-/* 打印：当作一页纸 */
 @media print{
-  .topline,.masthead nav,.foot,.back,.pager,.links{display:none}
+  .topline,.masthead nav,.foot,.back,.pager,.links,.lang{display:none}
   body{background:#fff; color:#000}
   main{padding-top:0}
   section{margin-bottom:32px}
@@ -275,135 +297,203 @@ a.rowlink:hover h3{color:var(--green)}
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
-    <a class="wordmark" href="./"><span class="mono-mark">S ／ Z</span><em>SHAWN ZHANG · 个人主页</em></a>
-    <nav>
-      <a href="#about">关于</a><a href="#work">项目</a><a href="#writing">写作</a><a href="#experience">经历</a>
-      <a href="https://github.com/Eastr5" target="_blank" rel="noopener">GitHub</a>
-    </nav>
+    <a class="wordmark" href="./"><span class="mono-mark">S ／ Z</span><em id="mast-sub">SHAWN ZHANG · PERSONAL SITE</em></a>
+    <div class="lang" id="lang"></div>
+    <nav id="nav"></nav>
   </div>
 </header>
 
-<main class="wrap" id="app"><p class="loading">加载中</p></main>
+<main class="wrap" id="app"><p class="loading">Loading</p></main>
 
 <footer class="foot" id="colophon"></footer>
 
 <script>
 const POSTS = [
-  {file:"2026-11-09-academic-tikz-merge", title:"Skills 花样众多，损耗的是注意力，边际效益会下降", date:"2026-11-09", series:"AI 产品", draft:true},
-  {file:"2026-11-10-context-budget", title:"溢出的上下文，会损坏模型的智力吗", date:"2026-11-10", series:"AI 产品", draft:true},
-  {file:"2026-11-12-ai-security", title:"AI 把攻防的时间差压到了小时级", date:"2026-11-12", series:"AI 产品", draft:true},
-  {file:"2026-11-14-ai-sentinel", title:"AI 哨兵该站在哪：安全正在从一次付费变成按次付费", date:"2026-11-14", series:"AI 产品", draft:true},
-  {file:"2026-03-26-verifier-burden", title:"AI 越强，你反而越累", date:"2026-03-26", series:"和 AI 协作的方式", draft:false},
-  {file:"2026-03-24-n8n-chatbi-firewall", title:"让 AI 查数据库，它却先改写了我的指令", date:"2026-03-24", series:"AI 产品", draft:false},
-  {file:"2026-03-24-notion-block-model", title:"Notion 为什么值 110 亿美元", date:"2026-03-24", series:"AI 产品", draft:false},
-  {file:"2026-03-24-vibe-design-moat", title:"Vibe Design 普及之后，护城河在哪", date:"2026-03-24", series:"AI 产品", draft:false},
+  {file:"2026-11-09-academic-tikz-merge", title:"Skills 花样众多，损耗的是注意力，边际效益会下降", title_en:"Too Many Skills, Less Attention: Why Marginal Returns Fall", date:"2026-11-09", series:"AI 产品", series_en:"AI Products", draft:true},
+  {file:"2026-11-10-context-budget", title:"溢出的上下文，会损坏模型的智力吗", title_en:"Does Overflowing Context Damage a Model's Intelligence?", date:"2026-11-10", series:"AI 产品", series_en:"AI Products", draft:true},
+  {file:"2026-11-12-ai-security", title:"AI 把攻防的时间差压到了小时级", title_en:"AI Has Compressed the Attack and Defence Gap to Hours", date:"2026-11-12", series:"AI 产品", series_en:"AI Products", draft:true},
+  {file:"2026-11-14-ai-sentinel", title:"AI 哨兵该站在哪：安全正在从一次付费变成按次付费", title_en:"Where Should an AI Sentinel Stand: Security Moves to Per-Request Cost", date:"2026-11-14", series:"AI 产品", series_en:"AI Products", draft:true},
+  {file:"2026-03-26-verifier-burden", title:"AI 越强，你反而越累", title_en:"Why Stronger AI Leaves You More Tired", date:"2026-03-26", series:"和 AI 协作的方式", series_en:"Working with AI", draft:false},
+  {file:"2026-03-24-n8n-chatbi-firewall", title:"让 AI 查数据库，它却先改写了我的指令", title_en:"I Asked AI to Query a Database and It Rewrote My Instruction First", date:"2026-03-24", series:"AI 产品", series_en:"AI Products", draft:false},
+  {file:"2026-03-24-notion-block-model", title:"Notion 为什么值 110 亿美元", title_en:"Why Notion Is Worth $11 Billion", date:"2026-03-24", series:"AI 产品", series_en:"AI Products", draft:false},
+  {file:"2026-03-24-vibe-design-moat", title:"Vibe Design 普及之后，护城河在哪", title_en:"After Vibe Design, Where Does the Moat Sit?", date:"2026-03-24", series:"AI 产品", series_en:"AI Products", draft:false},
 ];
-const PROJECTS = [
-  {name:"skill-router-v3", year:"2026 · 进行中",
-   desc:"零安装的 MCP-Skill-Tool 路由器。一个纯 Markdown 的 SKILL.md，让 AI 在自己的技能、MCP 和工具里选路。自建 38 条评测集，Top-1 86.7%，口径与波动都写在 README 里。",
-   link:"https://github.com/Eastr5/skill-router-v3", more:"GitHub"},
-  {name:"academic-tikz", year:"2025 · 维护",
-   desc:"把三个互相抢触发的 TikZ 绘图技能合并成一个入口，模板、脚本与 recipes 全部保留，重新设计的是路由。",
-   link:"https://github.com/Eastr5/academic-tikz", more:"GitHub"},
-  {name:"AI 笔记簿", year:"2026 · 本页",
-   desc:"把和 AI 的讨论整理成可回看的想法笔记。一篇只讲一个想法，重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。",
-   link:"#writing", more:"阅读"},
-];
-const CV = [
-  {when:"2026.04 — 2026.07", what:"外资游戏公司 · AI 部门", desc:"AI 产品经理，负责海外投放方向"},
-  {when:"2028 届 · 推免", what:"中央财经大学 · 产业经济学硕士", desc:"数字经济方向"},
-  {when:"本科", what:"中央财经大学 · 电子商务", desc:"商务智能方向"},
-];
-const FOCUS = ["Text2SQL","Agent 系统设计","评测 · Evals","SQL · Python · n8n"];
-const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
+const I18N = {
+  en: {
+    mastSub:"SHAWN ZHANG · PERSONAL SITE",
+    nav:[["About","#about"],["Work","#work"],["Writing","#writing"],["Background","#experience"],["GitHub","https://github.com/Eastr5"]],
+    heroName:"Shawn Zhang", heroAlt:"张世昌",
+    statement:'AI product manager. I care more about <span class="hl">what a feature should do, and how we would know it worked</span>, than about what a model can do.',
+    bio1:"I am a master's student in Industrial Economics at the Central University of Finance and Economics, working on the digital economy and graduating in 2028. My undergraduate degree was in E-Commerce with a focus on business intelligence. From April to July 2026 I worked as an AI product manager in a newly built AI team at a global gaming company, on overseas user acquisition.",
+    bio2:"Most of my work sits between a business question and a working system. I try to strip a surface request down to the real one, decide which parts belong to the model and which do not, and set up a way to tell whether the result is any good. I write about those decisions and build small, zero-install tools on the side.",
+    availabilityLabel:"AVAILABILITY", availability:'<span class="flag">OPEN TO INTERNSHIPS</span> in AI product, data and risk · MSc graduating 2028',
+    facts:["BEIJING, CHINA","CUFE · MSc 2028","AI PRODUCT · DATA & RISK"],
+    nowLabel:"NOW", now:"Building out the eval set for skill-router-v3; next up is testing a retrieval-based v4.",
+    focusLabel:"FOCUS", focus:["Text2SQL","Agent Systems","Evals","SQL · Python · n8n"],
+    aboutLinks:'<a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="#writing">Writing</a>',
+    sec:[["ABOUT",""],["SELECTED WORK","Things I have built"],["WRITING","AI Notebook"],["BACKGROUND","The short version"],["CONTACT",""]],
+    writingNote:"#N# essays, written in Chinese. Titles below are translated; articles open in the original language.",
+    projects:[
+      {name:"skill-router-v3", year:"2026 · ACTIVE", desc:"A zero-install MCP-Skill-Tool router. One plain Markdown SKILL.md lets a model pick among skills, MCP servers and tools. I built a 38-case eval set; Top-1 is 86.7%, with methodology and variance documented in the README.", more:"GitHub ↗", link:"https://github.com/Eastr5/skill-router-v3"},
+      {name:"academic-tikz", year:"2025 · MAINTAINED", desc:"Merged three overlapping TikZ diagram skills into a single entry point, keeping every template, script and recipe, and redesigning only the routing.", more:"GitHub ↗", link:"https://github.com/Eastr5/academic-tikz"},
+      {name:"AI Notebook", year:"2026 · THIS SITE", desc:"Notes from working with AI. One idea per piece, focused on what I accepted, what I rejected and why. Written in Chinese.", more:"Read ↗", link:"#writing"}
+    ],
+    cv:[
+      {when:"APR – JUL 2026", what:"Global gaming company · AI team", desc:"AI product manager, overseas user acquisition"},
+      {when:"MSC 2028", what:"Central University of Finance and Economics", desc:"Industrial Economics, Digital Economy track · recommended admission"},
+      {when:"BSC", what:"Central University of Finance and Economics", desc:"E-Commerce, Business Intelligence track"}
+    ],
+    closing:"If you are hiring for an AI product or data internship, or want to talk about skills governance, I would be glad to hear from you.",
+    contactLinks:'<a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/Eastr5/blog">Blog source</a>',
+    count:"essays", back:"← BACK TO HOME", older:"← OLDER", newer:"NEWER →",
+    minRead:"min read", draft:"Draft", chinese:"Chinese", chineseNotice:"This essay is written in Chinese.",
+    footName:"SHAWN ZHANG · 张世昌", footSub:"Written in Markdown · Hosted on GitHub Pages · 2026",
+    notFound:"Essay not found", loadFail:"Could not load the essay."
+  },
+  zh: {
+    mastSub:"张世昌 · 个人主页",
+    nav:[["关于","#about"],["项目","#work"],["写作","#writing"],["经历","#experience"],["GitHub","https://github.com/Eastr5"]],
+    heroName:"张世昌", heroAlt:"Shawn Zhang",
+    statement:'AI 产品经理。比起模型能做什么，我更在意<span class="hl">一个功能该不该做，以及上线后用什么判断它有效</span>。',
+    bio1:"中央财经大学电子商务本科（商务智能方向），校内推免至产业经济学硕士（数字经济方向），2028 届。2026 年 4 月到 7 月，在一家外资游戏公司新建的 AI 部门做 AI 产品经理，负责海外投放方向。",
+    bio2:"做产品时我更在意两件事：把表面需求剥成真实需求，判断哪些交给模型、哪些不交；以及一个功能该不该做，上线后用什么判断它有效。业余时间把和 AI 的讨论整理成笔记，顺手做几个零安装的小工具。",
+    availabilityLabel:"求职意向", availability:'<span class="flag">寻找实习机会</span>，方向为 AI 产品、数据与风控 · 2028 年硕士毕业',
+    facts:["北京","中央财经大学 · 2028 届硕士","AI 产品 · 数据与风控"],
+    nowLabel:"最近", now:"在 skill-router-v3 上补评测，接下来想做 v4 的检索化验证。",
+    focusLabel:"关注", focus:["Text2SQL","Agent 系统设计","评测 · Evals","SQL · Python · n8n"],
+    aboutLinks:'<a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="#writing">写作</a>',
+    sec:[["关于",""],["项目","做过的东西"],["写作","AI 笔记簿"],["经历","简短版本"],["联系",""]],
+    writingNote:"共 #N# 篇，正文与标题均为中文。",
+    projects:[
+      {name:"skill-router-v3", year:"2026 · 进行中", desc:"零安装的 MCP-Skill-Tool 路由器。一个纯 Markdown 的 SKILL.md，让 AI 在自己的技能、MCP 和工具里选路。自建 38 条评测集，Top-1 86.7%，口径与波动都写在 README 里。", more:"GitHub ↗", link:"https://github.com/Eastr5/skill-router-v3"},
+      {name:"academic-tikz", year:"2025 · 维护", desc:"把三个互相抢触发的 TikZ 绘图技能合并成一个入口，模板、脚本与 recipes 全部保留，重新设计的是路由。", more:"GitHub ↗", link:"https://github.com/Eastr5/academic-tikz"},
+      {name:"AI 笔记簿", year:"2026 · 本页", desc:"把和 AI 的讨论整理成可回看的想法笔记。一篇只讲一个想法，重点不是 AI 说了什么，而是我采纳了什么、没采纳什么、为什么。", more:"阅读 ↗", link:"#writing"}
+    ],
+    cv:[
+      {when:"2026.04 — 2026.07", what:"外资游戏公司 · AI 部门", desc:"AI 产品经理，负责海外投放方向"},
+      {when:"2028 届 · 推免", what:"中央财经大学 · 产业经济学硕士", desc:"数字经济方向"},
+      {when:"本科", what:"中央财经大学 · 电子商务", desc:"商务智能方向"}
+    ],
+    closing:"想聊 AI 产品、数据与风控，<br>或者 skills 治理，欢迎来信。",
+    contactLinks:'<a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/Eastr5/blog">博客源仓库</a>',
+    count:"篇", back:"← 返回主页", older:"← 上一篇", newer:"下一篇 →",
+    minRead:"分钟", draft:"草稿", chinese:"中文", chineseNotice:"",
+    footName:"张世昌 · Shawn Zhang", footSub:"用 Markdown 写作 · 由 GitHub Pages 托管 · 二〇二六",
+    notFound:"文章不存在", loadFail:"正文加载失败。"
+  }
+};
+
+const esc = s => {
+  const d = document.createElement("span");
+  d.textContent = String(s);
+  return d.innerHTML;
+};
 const fmtDate = d => d.replaceAll("-",".");
 const app = document.getElementById("app");
 const foot = document.getElementById("colophon");
+const params = new URLSearchParams(location.search);
+let LANG = params.get("lang") || localStorage.getItem("site-lang") || "en";
+if(!["en","zh"].includes(LANG)) LANG = "en";
+const T = () => I18N[LANG];
 
 function sechead(no, label){
   return `<div class="sechead"><span>${no}</span><span class="label">${label}</span><span class="line"></span></div>`;
 }
+function postTitle(p){ return LANG === "en" ? p.title_en : p.title; }
+function seriesOf(p){ return LANG === "en" ? p.series_en : p.series; }
+
+function renderChrome(){
+  const t = T();
+  document.documentElement.lang = LANG === "zh" ? "zh-CN" : "en";
+  document.getElementById("mast-sub").textContent = t.mastSub;
+  document.getElementById("nav").innerHTML = t.nav.map(([label,href]) =>
+    `<a href="${href}"${href.startsWith("http")?' target="_blank" rel="noopener"':''}>${label}</a>`).join("");
+  document.getElementById("lang").innerHTML = LANG === "en"
+    ? '<b>EN</b><span class="sep">/</span><a data-lang="zh">中文</a>'
+    : '<a data-lang="en">EN</a><span class="sep">/</span><b>中文</b>';
+  document.querySelectorAll("#lang a[data-lang]").forEach(a => {
+    a.addEventListener("click", () => {
+      LANG = a.dataset.lang;
+      localStorage.setItem("site-lang", LANG);
+      const q = new URLSearchParams(location.search);
+      q.set("lang", LANG);
+      history.replaceState(null, "", "?" + q.toString());
+      renderChrome();
+      const slug = q.get("post");
+      slug ? renderPost(slug) : renderHome();
+      renderFoot();
+    });
+  });
+}
+
+function renderFoot(){
+  const t = T();
+  foot.innerHTML = `<div class="ornament">❦</div>
+    <p class="fm">${esc(t.footName)}</p>
+    <p class="fs">${esc(t.footSub)}</p>`;
+}
 
 function renderHome(){
-  const projs = PROJECTS.map((p,i) => `
+  const t = T();
+  const projs = t.projects.map((p,i) => `
     <article class="entry">
-      <div class="head">
-        <span class="no">${String(i+1).padStart(2,"0")}</span>
-        <h3>${esc(p.name)}</h3>
-        <span class="when">${p.year}</span>
-      </div>
+      <div class="head"><span class="no">${String(i+1).padStart(2,"0")}</span><h3>${esc(p.name)}</h3><span class="when">${esc(p.year)}</span></div>
       <p class="desc">${esc(p.desc)}</p>
-      <div class="more"><a href="${p.link}">${p.more} ↗</a></div>
+      <div class="more"><a href="${p.link}">${esc(p.more)}</a></div>
     </article>`).join("");
 
   const posts = POSTS.map((p,i) => {
     const no = String(POSTS.length - i).padStart(2,"0");
     return `<article class="entry">
-      <a class="rowlink" href="?post=${p.file}">
-        <div class="head">
-          <span class="no">${no}</span>
-          <h3>${esc(p.title)}</h3>
-          <span class="when">${fmtDate(p.date)}</span>
-        </div>
-        <span class="kind">${p.series}${p.draft?' · <span class="draft">草稿</span>':''}</span>
+      <a class="rowlink" href="?post=${p.file}&lang=${LANG}">
+        <div class="head"><span class="no">${no}</span><h3>${esc(postTitle(p))}</h3><span class="when">${fmtDate(p.date)}</span></div>
+        <span class="kind">${esc(seriesOf(p))} · ${t.chinese}${p.draft?' · <span class="draft">'+t.draft+'</span>':''}</span>
       </a>
     </article>`;
   }).join("");
 
-  const cvs = CV.map(c => `
-    <div class="cv-row"><dt>${esc(c.when)}</dt><dd><b>${esc(c.what)}</b><span>${esc(c.desc)}</span></dd></div>`).join("");
+  const cvs = t.cv.map(c => `<div class="cv-row"><dt>${esc(c.when)}</dt><dd><b>${esc(c.what)}</b><span>${esc(c.desc)}</span></dd></div>`).join("");
 
   app.innerHTML = `
   <section id="about">
-    ${sechead("01","关于")}
-    <h1 class="hero">张世昌</h1>
-    <p class="hero-latin">Shawn Zhang</p>
-    <p class="statement">AI 产品经理，关注<span class="hl"> AI 与具体场景</span>，尤其是增长和风控。</p>
-    <div class="hero-text">
-      <p>中央财经大学电子商务本科（商务智能方向），校内推免至产业经济学硕士（数字经济方向）。2026 年 4 月到 7 月，在一家外资游戏公司新建的 AI 部门做 AI 产品经理，负责海外投放方向。</p>
-      <p>做产品时我更在意两件事：把表面需求剥成真实需求，判断哪些交给模型、哪些不交；以及一个功能该不该做，上线后用什么判断它有效。业余时间把和 AI 的讨论整理成笔记，顺手做几个零安装的小工具。</p>
-    </div>
-    <p class="now"><span class="k">最近</span>在 skill-router-v3 上补评测，接下来想做 v4 的检索化验证。</p>
-    <div class="focus">
-      <span class="k">关注</span>
-      ${FOCUS.map((f,i) => (i?'<span class="s">/</span>':'') + `<span>${esc(f)}</span>`).join("")}
-    </div>
-    <div class="links"><a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="#writing">写作</a></div>
+    ${sechead("01", t.sec[0][0])}
+    <div class="available"><span class="k">${esc(t.availabilityLabel)}</span><span>${t.availability}</span></div>
+    <h1 class="hero">${esc(t.heroName)}</h1>
+    <p class="hero-latin">${esc(t.heroAlt)}</p>
+    <p class="statement">${t.statement}</p>
+    <p class="facts">${t.facts.map((f,i)=>(i?'<span class="s">/</span>':'')+esc(f)).join("")}</p>
+    <div class="hero-text"><p>${esc(t.bio1)}</p><p>${esc(t.bio2)}</p></div>
+    <p class="now"><span class="k">${esc(t.nowLabel)}</span>${esc(t.now)}</p>
+    <div class="focus"><span class="k">${esc(t.focusLabel)}</span>${t.focus.map((f,i)=>(i?'<span class="s">/</span>':'')+`<span>${esc(f)}</span>`).join("")}</div>
+    <div class="links">${t.aboutLinks}</div>
   </section>
 
   <section id="work">
-    ${sechead("02","项目")}
-    <h2 class="sec">做过的东西</h2>
-    ${projs}
+    ${sechead("02", t.sec[1][0])}<h2 class="sec">${esc(t.sec[1][1])}</h2>${projs}
   </section>
 
   <section id="writing">
-    ${sechead("03","写作")}
-    <h2 class="sec">AI 笔记簿</h2>
-    ${posts}
+    ${sechead("03", t.sec[2][0])}<h2 class="sec">${esc(t.sec[2][1])}</h2>
+    <p class="section-note">${esc(t.writingNote.replace("#N#", POSTS.length))}</p>${posts}
   </section>
 
   <section id="experience">
-    ${sechead("04","经历")}
-    <h2 class="sec">简短版本</h2>
-    <dl class="cv">${cvs}</dl>
+    ${sechead("04", t.sec[3][0])}<h2 class="sec">${esc(t.sec[3][1])}</h2><dl class="cv">${cvs}</dl>
   </section>
 
   <section id="contact">
-    ${sechead("05","联系")}
-    <div class="closing">
-      <p>想聊 AI 产品、数据与风控，<br>或者 skills 治理，欢迎来信。</p>
-      <div class="links"><a href="https://github.com/Eastr5">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/Eastr5/blog">博客源仓库</a></div>
-    </div>
+    ${sechead("05", t.sec[4][0])}<div class="closing"><p>${t.closing}</p><div class="links">${t.contactLinks}</div></div>
   </section>`;
 }
 
 async function renderPost(slug){
+  const t = T();
   const idx = POSTS.findIndex(x => x.file === slug);
   const p = POSTS[idx];
-  if(!p){ app.innerHTML = `${sechead("00","文章")}<h2 class="sec">文章不存在</h2><a class="back" href="./">返回主页</a>`; return; }
+  if(!p){ app.innerHTML = `${sechead("00", t.sec[2][0])}<h2 class="sec">${esc(t.notFound)}</h2><a class="back" href="?lang=${LANG}">${esc(t.back)}</a>`; return; }
   const no = String(POSTS.length - idx).padStart(2,"0");
-  app.innerHTML = '<p class="loading">正在加载正文</p>';
+  app.innerHTML = `<p class="loading">${esc(LANG === "en" ? "Loading" : "加载中")}</p>`;
   let meta = {};
   try{
     const y = await (await fetch(`posts/meta/${slug}.yaml`)).text();
@@ -414,7 +504,7 @@ async function renderPost(slug){
   }catch(e){}
   let md;
   try{ md = await (await fetch(`posts/${slug}.md`)).text(); }
-  catch(e){ app.innerHTML = `<h2 class="sec">${esc(p.title)}</h2><p>正文加载失败。</p><a class="back" href="./">返回主页</a>`; return; }
+  catch(e){ app.innerHTML = `<h2 class="sec">${esc(postTitle(p))}</h2><p>${esc(t.loadFail)}</p><a class="back" href="?lang=${LANG}">${esc(t.back)}</a>`; return; }
   md = md.replaceAll("../assets/", "assets/");
   const picture = md.match(/<picture>[\s\S]*?<\/picture>/);
   md = md.replace(/<picture>[\s\S]*?<\/picture>\s*/,"");
@@ -422,39 +512,29 @@ async function renderPost(slug){
   const mins = Math.max(1, Math.round(md.replace(/<[^>]+>/g,"").length/500));
   const older = POSTS[idx+1], newer = POSTS[idx-1];
   const plinks = [];
-  if(older) plinks.push(`<a href="?post=${older.file}"><span class="lab">← 上一篇</span><b>${esc(older.title)}</b></a>`);
-  if(newer) plinks.push(`<a href="?post=${newer.file}"><span class="lab">下一篇 →</span><b>${esc(newer.title)}</b></a>`);
+  if(older) plinks.push(`<a href="?post=${older.file}&lang=${LANG}"><span class="lab">${esc(t.older)}</span><b>${esc(postTitle(older))}</b></a>`);
+  if(newer) plinks.push(`<a href="?post=${newer.file}&lang=${LANG}"><span class="lab">${esc(t.newer)}</span><b>${esc(postTitle(newer))}</b></a>`);
   const pager = plinks.length ? `<nav class="pager${plinks.length===1?" one":""}">${plinks.join("")}</nav>` : "";
   app.innerHTML = `
-    ${sechead(no, esc(meta.kicker || p.series))}
-    <h2 class="sec" style="font-size:31px;margin-bottom:12px">${esc(meta.title || p.title)}</h2>
+    ${sechead(no, esc(seriesOf(p)))}
+    ${t.chineseNotice?`<p class="notice">${esc(t.chineseNotice)}</p>`:""}
+    <h2 class="sec" style="font-size:30px;margin-bottom:12px">${esc(meta.title || p.title)}</h2>
     ${meta.subtitle?`<p class="subtitle">${esc(meta.subtitle)}</p>`:""}
     <div class="meta">
-      <span>${fmtDate(p.date)}</span><span>·</span>
-      <span>${p.series}</span><span>·</span>
-      <span>约 ${mins} 分钟</span>
-      ${p.draft?'<span>·</span><span class="draft">草稿</span>':''}
+      <span>${fmtDate(p.date)}</span><span>·</span><span>${esc(seriesOf(p))}</span><span>·</span>
+      <span>${mins} ${esc(t.minRead)}</span><span>·</span><span>${esc(t.chinese)}</span>
+      ${p.draft?'<span>·</span><span class="draft">'+esc(t.draft)+'</span>':''}
     </div>
     ${picture?`<div class="hero-img">${picture[0]}</div>`:""}
     <div class="body">${body}</div>
     ${pager}
-    <a class="back" href="./">← 返回主页</a>`;
-
-  foot.innerHTML = `
-    <div class="ornament">❦</div>
-    <p class="fm">张世昌 · Shawn Zhang</p>
-    <p class="fs">用 Markdown 写作 · 由 GitHub Pages 托管</p>`;
+    <a class="back" href="?lang=${LANG}">${esc(t.back)}</a>`;
 }
 
-function renderFootHome(){
-  foot.innerHTML = `
-    <div class="ornament">❦</div>
-    <p class="fm">张世昌 · Shawn Zhang</p>
-    <p class="fs">用 Markdown 写作 · 由 GitHub Pages 托管<br>二〇二六年</p>`;
-}
-
-const slug = new URLSearchParams(location.search).get("post");
-if(slug){ renderPost(slug); } else { renderHome(); renderFootHome(); }
+renderChrome();
+renderFoot();
+const slug = params.get("post");
+slug ? renderPost(slug) : renderHome();
 </script>
 </body>
 </html>
