@@ -47,8 +47,8 @@
   pointer-events:none; will-change:transform;
 }
 .js .reveal{
-  opacity:0; transform:translateY(16px);
-  transition:opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1);
+  opacity:0; transform:translateY(14px);
+  transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);
 }
 .js .reveal.in{opacity:1; transform:none}
 .sechead .line{
@@ -642,8 +642,12 @@ function scheduleMotion(){ requestAnimationFrame(() => {
         motionObserver.unobserve(e.target);
       }
     });
-  },{rootMargin:"0px 0px -6% 0px", threshold:.06});
+  },{rootMargin:"0px 0px 240px 0px", threshold:.01});
   document.querySelectorAll(".reveal:not(.in)").forEach(el => motionObserver.observe(el));
+  clearTimeout(window.__revealFallback);
+  window.__revealFallback = setTimeout(() => {
+    document.querySelectorAll(".reveal:not(.in)").forEach(el => el.classList.add("in"));
+  }, 3000);
 });}
 
 renderChrome();
