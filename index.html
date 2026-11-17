@@ -493,7 +493,7 @@ function renderHome(){
 
   const posts = POSTS.map((p,i) => {
     const no = String(POSTS.length - i).padStart(2,"0");
-    return `<article class="entry">
+    return `<article class="entry reveal">
       <a class="rowlink" href="?post=${p.file}&lang=${LANG}">
         <div class="head"><span class="no">${no}</span><h3>${esc(postTitle(p))}</h3><span class="when">${fmtDate(p.date)}</span></div>
         <span class="kind">${esc(seriesOf(p))} · ${t.chinese}${p.draft?' · <span class="draft">'+t.draft+'</span>':''}</span>
