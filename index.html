@@ -707,8 +707,18 @@ function scheduleMotion(){ requestAnimationFrame(() => {
   document.querySelectorAll(".reveal:not(.in)").forEach(el => motionObserver.observe(el));
   clearTimeout(window.__revealFallback);
   window.__revealFallback = setTimeout(() => {
-    document.querySelectorAll(".reveal:not(.in)").forEach(el => el.classList.add("in"));
-  }, 3000);
+    document.querySelectorAll(".reveal").forEach(el => {
+      const r = el.getBoundingClientRect();
+      const onScreen = r.top < innerHeight && r.bottom > 0;
+      el.classList.add("in");
+      if(onScreen){
+        // 视口内的内容必须可见：清掉过渡，防止过渡被阻塞而长期半透明
+        el.style.transition = "none";
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      }
+    });
+  }, 2600);
 });}
 
 renderChrome();
