@@ -593,63 +593,52 @@ function bindGlobalMotion(){
 
   const cv = document.querySelector(".dotfield");
   const ctx = cv.getContext("2d");
-  let dpr=1, W=0, H=0, dots=[], rafId=0, mx=-9e4, my=-9e4;
+  let dpr=1, W=0, H=0, dots=[], rafId=0;
   const isDark = () => matchMedia("(prefers-color-scheme: dark)").matches;
   const inkCol = () => isDark() ? [233,230,222] : [27,26,23];
   const accCol = () => isDark() ? [92,185,140] : [31,122,82];
 
-  const paint = () => {
+  const paint = (t) => {
     const I = inkCol(), A = accCol();
     ctx.clearRect(0, 0, W, H);
-    const groups = new Map(), live = [];
+    const groups = new Map();
     for(const p of dots){
-      if(p.cur > 0.015){ live.push(p); continue; }
-      const a = Math.round(p.base * 50) / 50;
-      if(!groups.has(a)) groups.set(a, []);
-      groups.get(a).push(p);
+      const w1 = Math.sin(p.x*0.020 + p.y*0.013 - t*0.55);
+      const w2 = Math.sin(p.x*0.006 + p.y*0.005 - t*0.21 + 1.7);
+      let lift = (w1*0.55 + w2*0.45 + 1) * 0.5;
+      if(p.inLane) lift *= 0.35;
+      const lk = Math.min(5, Math.floor(lift*6));
+      const key = lk*3 + p.bk;
+      let g = groups.get(key);
+      if(!g){ g = { lv:(lk+0.5)/6, base:p.base, acc:lk>=5, list:[] }; groups.set(key, g); }
+      g.list.push(p);
     }
-    for(const [a, list] of groups){
+    for(const g of groups.values()){
+      const lv = g.lv;
+      const r = 0.82 + lv*0.78;
+      const dy = -lv*1.6;
       ctx.beginPath();
-      for(const p of list){
-        ctx.moveTo(p.x + 0.95, p.y);
-        ctx.arc(p.x, p.y, 0.95, 0, 6.2832);
+      for(const p of g.list){
+        ctx.moveTo(p.x + r, p.y + dy);
+        ctx.arc(p.x, p.y + dy, r, 0, 6.2832);
       }
-      ctx.fillStyle = "rgba(" + I[0] + "," + I[1] + "," + I[2] + "," + a + ")";
-      ctx.fill();
-    }
-    for(const p of live){
-      const t = p.cur;
-      const r = 0.95 + t * 2.0;
-      const y = p.y - t * 4.2;
-      const cr = Math.round(I[0] + (A[0]-I[0]) * t);
-      const cg = Math.round(I[1] + (A[1]-I[1]) * t);
-      const cb = Math.round(I[2] + (A[2]-I[2]) * t);
-      const al = Math.min(1, p.base + t * 0.92);
-      ctx.beginPath();
+      const m = g.acc ? 0.2 : 0;
+      const cr = Math.round(I[0] + (A[0]-I[0]) * m);
+      const cg = Math.round(I[1] + (A[1]-I[1]) * m);
+      const cb = Math.round(I[2] + (A[2]-I[2]) * m);
+      const al = Math.min(1, g.base * (0.5 + lv*1.25));
       ctx.fillStyle = "rgba(" + cr + "," + cg + "," + cb + "," + al + ")";
-      ctx.arc(p.x, y, r, 0, 6.2832);
       ctx.fill();
     }
   };
 
-  const step = () => {
-    let busy = false;
-    const pointerInLane = mx > laneL && mx < laneR;
-    for(const p of dots){
-      let tgt = 0;
-      if(!pointerInLane){
-        const d = Math.hypot(mx - p.x, my - p.y);
-        if(d < 180){
-          tgt = Math.pow(1 - d/180, 1.25);
-          if(p.inLane) tgt *= 0.3;
-        }
-      }
-      const diff = tgt - p.cur;
-      if(Math.abs(diff) > 0.002){ p.cur += diff * 0.16; busy = true; }
-      else p.cur = tgt;
-    }
-    paint();
-    rafId = busy ? requestAnimationFrame(step) : 0;
+  let lastTick = 0;
+  const tick = () => {
+    rafId = requestAnimationFrame(tick);
+    const now = performance.now();
+    if(now - lastTick < 33) return;
+    lastTick = now;
+    paint(now / 1000);
   };
 
   let laneL = 0, laneR = 0;
@@ -666,32 +655,33 @@ function bindGlobalMotion(){
     for(let y = gap/2; y < H; y += gap){
       for(let x = gap/2; x < W; x += gap){
         const inLane = x > laneL && x < laneR;
-        const base = (0.07 + Math.random()*0.09) * (inLane ? 0.5 : 1);
-        dots.push({ x, y, base, cur: 0, inLane });
+        const bk = Math.floor(Math.random()*3);
+        const base = (0.07 + bk*0.035) * (inLane ? 0.5 : 1);
+        dots.push({ x, y, base, bk, inLane });
       }
     }
-    paint();
+    paint(performance.now()/1000);
     cv.classList.add("ready");
   };
   buildDots();
+  rafId = requestAnimationFrame(tick);
   let rsz;
-  addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(buildDots, 200); });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paint);
+  addEventListener("resize", () => {
+    clearTimeout(rsz);
+    rsz = setTimeout(() => { buildDots(); lastTick = 0; }, 200);
+  });
   document.addEventListener("visibilitychange", () => {
-    if(document.hidden && rafId){ cancelAnimationFrame(rafId); rafId = 0; }
+    if(document.hidden){
+      if(rafId){ cancelAnimationFrame(rafId); rafId = 0; }
+    } else if(!rafId){
+      lastTick = 0;
+      rafId = requestAnimationFrame(tick);
+    }
   });
 
   if(!matchMedia("(pointer: fine)").matches) return;
   const mark = document.querySelector(".wordmark .mono-mark");
   const mast = document.querySelector(".masthead");
-  addEventListener("pointermove", e => {
-    mx = e.clientX; my = e.clientY;
-    if(!rafId) rafId = requestAnimationFrame(step);
-  }, { passive: true });
-  addEventListener("pointerleave", () => {
-    mx = my = -9e4;
-    if(!rafId) rafId = requestAnimationFrame(step);
-  });
   if(mast && mark){
     mast.addEventListener("pointermove", e => {
       const r=mast.getBoundingClientRect();
