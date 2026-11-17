@@ -634,9 +634,16 @@ function bindGlobalMotion(){
 
   const step = () => {
     let busy = false;
+    const pointerInLane = mx > laneL && mx < laneR;
     for(const p of dots){
-      const d = Math.hypot(mx - p.x, my - p.y);
-      const tgt = d < 180 ? Math.pow(1 - d/180, 1.25) : 0;
+      let tgt = 0;
+      if(!pointerInLane){
+        const d = Math.hypot(mx - p.x, my - p.y);
+        if(d < 180){
+          tgt = Math.pow(1 - d/180, 1.25);
+          if(p.inLane) tgt *= 0.3;
+        }
+      }
       const diff = tgt - p.cur;
       if(Math.abs(diff) > 0.002){ p.cur += diff * 0.16; busy = true; }
       else p.cur = tgt;
@@ -645,6 +652,7 @@ function bindGlobalMotion(){
     rafId = busy ? requestAnimationFrame(step) : 0;
   };
 
+  let laneL = 0, laneR = 0;
   const buildDots = () => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = innerWidth; H = innerHeight;
@@ -652,11 +660,14 @@ function bindGlobalMotion(){
     cv.style.width = W+"px"; cv.style.height = H+"px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const gap = 34;
+    const pad = 24, lane = Math.min(720, W - 2*pad);
+    laneL = (W - lane)/2 - 10; laneR = (W + lane)/2 + 10;
     dots = [];
     for(let y = gap/2; y < H; y += gap){
       for(let x = gap/2; x < W; x += gap){
-        const base = 0.07 + Math.random()*0.09;
-        dots.push({ x, y, base, cur: 0 });
+        const inLane = x > laneL && x < laneR;
+        const base = (0.07 + Math.random()*0.09) * (inLane ? 0.5 : 1);
+        dots.push({ x, y, base, cur: 0, inLane });
       }
     }
     paint();
