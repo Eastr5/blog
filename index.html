@@ -31,14 +31,62 @@
 }
 *{box-sizing:border-box}
 
-/* 动效层：纸面上的光与线 */
-:root{--glow:rgba(31,122,82,.075)}
-.bg-glow{
-  position:fixed; left:0; top:0; width:620px; height:620px; z-index:0;
-  margin:-310px 0 0 -310px; border-radius:50%; pointer-events:none;
-  background:radial-gradient(circle, var(--glow) 0%, transparent 68%);
-  transform:translate3d(50vw,35vh,0); will-change:transform;
-  opacity:0; transition:opacity .9s ease;
+/* 动效层：纸面上的多层色场与颗粒 */
+.aurora{
+  position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
+  opacity:0; transition:opacity 1.2s ease;
+  background:
+    radial-gradient(ellipse 85% 65% at 12% 8%, var(--field1) 0%, transparent 72%),
+    radial-gradient(ellipse 75% 60% at 88% 12%, var(--field2) 0%, transparent 70%),
+    radial-gradient(ellipse 95% 55% at 48% 100%, var(--field3) 0%, transparent 72%);
+}
+.aurora.ready{opacity:1}
+.aurora .blob{
+  position:absolute; border-radius:50%; filter:blur(60px);
+  will-change:transform;
+}
+.aurora .b1{
+  width:72vw; height:56vw; min-width:620px; min-height:480px;
+  left:-12vw; top:-16vw;
+  background:radial-gradient(ellipse at 40% 45%, var(--c1) 0%, transparent 68%);
+  animation:drift1 19s ease-in-out infinite alternate;
+}
+.aurora .b2{
+  width:62vw; height:50vw; min-width:520px; min-height:420px;
+  right:-14vw; top:6vh;
+  background:radial-gradient(ellipse at 55% 45%, var(--c2) 0%, transparent 68%);
+  animation:drift2 23s ease-in-out infinite alternate;
+}
+.aurora .b3{
+  width:78vw; height:46vw; min-width:640px; min-height:380px;
+  left:8vw; bottom:-24vh;
+  background:radial-gradient(ellipse at 50% 50%, var(--c3) 0%, transparent 70%);
+  animation:drift3 17s ease-in-out infinite alternate;
+}
+.aurora .grain{
+  position:absolute; inset:0; opacity:.07; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+}
+.aurora .spot{
+  position:absolute; left:0; top:0; width:960px; height:960px; margin:-480px 0 0 -480px;
+  border-radius:50%; pointer-events:none; will-change:transform;
+  background:radial-gradient(circle, var(--spot) 0%, transparent 62%);
+  opacity:0; transition:opacity 1s ease;
+}
+.aurora .spot.on{opacity:1}
+@keyframes drift1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(9vw,7vh,0) scale(1.14)}}
+@keyframes drift2{from{transform:translate3d(0,0,0) scale(1.08)}to{transform:translate3d(-11vw,10vh,0) scale(.94)}}
+@keyframes drift3{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(6vw,-9vh,0) scale(1.12)}}
+:root{
+  --c1:rgba(52,168,120,.52);--c2:rgba(205,132,70,.42);--c3:rgba(70,160,168,.36);--spot:rgba(52,168,120,.30);
+  --field1:rgba(46,150,108,.13);--field2:rgba(190,122,64,.10);--field3:rgba(62,148,158,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --c1:rgba(72,220,160,.48);--c2:rgba(228,148,84,.38);--c3:rgba(88,190,210,.34);--spot:rgba(96,225,176,.28);
+    --field1:rgba(52,170,124,.15);--field2:rgba(176,112,60,.11);--field3:rgba(58,148,170,.11);
+  }
+  .aurora .grain{mix-blend-mode:screen;opacity:.05}
 }
 .masthead,main,.foot{position:relative; z-index:1}
 .progress{
@@ -64,15 +112,14 @@
 }
 .entry:hover::before{transform:scaleY(1)}
 .entry:hover .no{color:var(--green)}
-@media (prefers-color-scheme: dark){:root{--glow:rgba(92,185,140,.055)}}
-@media (pointer:fine){.bg-glow.body-ready{opacity:1}}
 @media (max-width:640px){.entry::before{display:none}}
 @media (prefers-reduced-motion:reduce){
-  .bg-glow,.progress{display:none}
+  .aurora,.progress{display:none}
   html{scroll-behavior:auto}
   .js .reveal{opacity:1 !important; transform:none !important; transition:none}
   .sechead .line{transform:none !important; transition:none}
   .entry::before{transition:none}
+  .aurora .blob{animation:none}
 }
 ::selection{background:var(--green-soft); color:var(--ink)}
 :focus-visible{outline:2px solid var(--green); outline-offset:3px}
@@ -339,7 +386,7 @@ a.rowlink:hover h3{color:var(--green)}
 </style>
 </head>
 <body>
-<div class="bg-glow" aria-hidden="true"></div><div class="progress" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grain"></div><div class="spot"></div></div><div class="progress" aria-hidden="true"></div>
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
@@ -597,10 +644,12 @@ function bindGlobalMotion(){
   onScroll();
 
   if(!matchMedia("(pointer: fine)").matches) return;
-  const glow = document.querySelector(".bg-glow");
+  const aurora = document.querySelector(".aurora");
+  const spot = document.querySelector(".aurora .spot");
   const mark = document.querySelector(".wordmark .mono-mark");
   const mast = document.querySelector(".masthead");
   let tx=innerWidth/2, ty=innerHeight*.35, cx=tx, cy=ty, raf=0, lastMove=0;
+  setTimeout(() => aurora.classList.add("ready"), 120);
   const loop = () => {
     if(Date.now()-lastMove > 2500){
       const t=Date.now()/12000;
@@ -608,14 +657,14 @@ function bindGlobalMotion(){
       ty=innerHeight*(.35+.08*Math.cos(t*.7));
     }
     cx += (tx-cx)*.08; cy += (ty-cy)*.08;
-    glow.style.transform = `translate3d(${cx}px,${cy}px,0)`;
+    spot.style.transform = `translate3d(${cx}px,${cy}px,0)`;
     raf = requestAnimationFrame(loop);
   };
   raf = requestAnimationFrame(loop);
-  setTimeout(() => glow.classList.add("body-ready"), 700);
+  setTimeout(() => spot.classList.add("on"), 700);
   addEventListener("pointermove", e => {
     tx=e.clientX; ty=e.clientY; lastMove=Date.now();
-    glow.classList.add("body-ready");
+    spot.classList.add("on");
   },{passive:true});
   document.addEventListener("visibilitychange", () => {
     cancelAnimationFrame(raf);
