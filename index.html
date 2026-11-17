@@ -31,25 +31,30 @@
 }
 *{box-sizing:border-box}
 
-/* 动效层：等距小方块网格，鼠标靠近轻微上浮 */
+/* 动效层：稀疏墨点阵，靠近时浮起并转为品牌绿 */
 .tilegrid{
   position:fixed; inset:0; z-index:0; display:grid; justify-content:center;
-  align-content:center; gap:62px; pointer-events:none;
-  opacity:0; transition:opacity 1s ease;
+  align-content:center; gap:84px; pointer-events:none;
+  opacity:0; transition:opacity 1.2s ease;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
 }
 .tilegrid.ready{opacity:1}
 .tilegrid .t{
-  width:10px; height:10px; border-radius:2px;
-  background:var(--t-bg); border:1px solid var(--t-line);
-  opacity:.38; transform:translateY(0) scale(1);
-  transition:transform .42s cubic-bezier(.16,1,.3,1), opacity .42s ease;
+  width:7px; height:7px; border-radius:1.5px;
+  background:var(--t-ink); opacity:var(--o,.16);
+  transform:translateY(0) scale(1);
+  transition:transform .45s cubic-bezier(.16,1,.3,1), opacity .45s ease, background .45s ease;
 }
-.tilegrid .t.k1{opacity:.58; transform:translateY(-1px) scale(1.08)}
-.tilegrid .t.k2{opacity:.78; transform:translateY(-2px) scale(1.18)}
-.tilegrid .t.k3{opacity:1; transform:translateY(-3px) scale(1.30)}
-:root{--t-bg:rgba(31,122,82,.26); --t-line:rgba(31,122,82,.30)}
+.tilegrid .t.k1{transform:translateY(-1.5px) scale(1.14); opacity:calc(var(--o,.16) + .16)}
+.tilegrid .t.k2{transform:translateY(-2.5px) scale(1.34); opacity:calc(var(--o,.16) + .3)}
+.tilegrid .t.k3{
+  transform:translateY(-3.5px) scale(1.6);
+  opacity:calc(var(--o,.16) + .5); background:var(--t-accent);
+}
+:root{--t-ink:#1B1A17; --t-accent:#1F7A52}
 @media (prefers-color-scheme: dark){
-  :root{--t-bg:rgba(92,185,140,.22); --t-line:rgba(92,185,140,.26)}
+  :root{--t-ink:#E9E6DE; --t-accent:#5CB98C}
 }
 .masthead,main,.foot{position:relative; z-index:1}
 .progress{
@@ -608,19 +613,27 @@ function bindGlobalMotion(){
   const grid = document.querySelector(".tilegrid");
   let cells = [], cache = [], prevK = [];
   const buildTiles = () => {
-    const cols = Math.max(4, Math.floor((innerWidth-72)/72));
-    const rows = Math.max(4, Math.floor((innerHeight-72)/72));
+    const cols = Math.max(4, Math.floor((innerWidth-72)/91));
+    const rows = Math.max(4, Math.floor((innerHeight-72)/91));
     const n = Math.min(cols*rows, 420);
     let html = "";
-    for(let i=0;i<n;i++) html += '<i class="t"></i>';
+    for(let i=0;i<n;i++){
+      const o = (0.09 + Math.random()*0.15).toFixed(3);
+      html += `<i class="t" style="--o:${o}"></i>`;
+    }
     grid.innerHTML = html;
-    grid.style.gridTemplateColumns = `repeat(${cols}, 10px)`;
+    grid.style.gridTemplateColumns = `repeat(${cols}, 7px)`;
     cells = [...grid.children];
     prevK = new Array(n).fill("");
     requestAnimationFrame(() => {
       cache = cells.map(el => {
         const r = el.getBoundingClientRect();
-        return (r.left + r.width/2) + "," + (r.top + r.height/2);
+        const cx = r.left + r.width/2, cy = r.top + r.height/2;
+        if(Math.abs(cx - innerWidth/2) < 340){
+          const o = parseFloat(el.style.getPropertyValue("--o")) || .12;
+          el.style.setProperty("--o", (o*0.4).toFixed(3));
+        }
+        return cx + "," + cy;
       });
       grid.classList.add("ready");
     });
@@ -642,7 +655,7 @@ function bindGlobalMotion(){
       const c = cache[i]; if(!c) continue;
       const j = c.indexOf(",");
       const d = Math.hypot(px - +c.slice(0,j), py - +c.slice(j+1));
-      const k = d<55 ? "3" : d<105 ? "2" : d<155 ? "1" : "";
+      const k = d<60 ? "3" : d<115 ? "2" : d<170 ? "1" : "";
       if(prevK[i] !== k){
         prevK[i] = k;
         cells[i].className = k ? "t k"+k : "t";
