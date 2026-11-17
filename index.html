@@ -31,35 +31,25 @@
 }
 *{box-sizing:border-box}
 
-/* 动效层：暗色方块缓慢漂浮，鼠标经过轻微浮起 */
-.aurora{
-  position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;
-  opacity:0; transition:opacity 1.2s ease;
+/* 动效层：等距小方块网格，鼠标靠近轻微上浮 */
+.tilegrid{
+  position:fixed; inset:0; z-index:0; display:grid; justify-content:center;
+  align-content:center; gap:62px; pointer-events:none;
+  opacity:0; transition:opacity 1s ease;
 }
-.aurora.ready{opacity:1}
-.tile{
-  position:absolute; border:1px solid var(--tile-line);
-  background:var(--tile-fill); border-radius:2px;
-  will-change:transform; transition:background .5s ease, border-color .5s ease;
+.tilegrid.ready{opacity:1}
+.tilegrid .t{
+  width:10px; height:10px; border-radius:2px;
+  background:var(--t-bg); border:1px solid var(--t-line);
+  opacity:.38; transform:translateY(0) scale(1);
+  transition:transform .42s cubic-bezier(.16,1,.3,1), opacity .42s ease;
 }
-.tile:nth-child(1){width:210px;height:210px;left:4%;top:8%;animation:tileA 24s ease-in-out infinite alternate}
-.tile:nth-child(2){width:140px;height:140px;right:11%;top:16%;animation:tileB 19s ease-in-out infinite alternate}
-.tile:nth-child(3){width:270px;height:170px;left:18%;bottom:12%;animation:tileC 28s ease-in-out infinite alternate}
-.tile:nth-child(4){width:120px;height:120px;right:6%;bottom:22%;animation:tileA 21s ease-in-out infinite alternate-reverse}
-.tile:nth-child(5){width:170px;height:170px;left:48%;top:52%;animation:tileB 26s ease-in-out infinite alternate}
-.tile.lit{background:var(--tile-lit); border-color:var(--tile-line-lit)}
-@keyframes tileA{from{transform:translate3d(0,0,0)}to{transform:translate3d(36px,28px,0)}}
-@keyframes tileB{from{transform:translate3d(0,0,0)}to{transform:translate3d(-30px,38px,0)}}
-@keyframes tileC{from{transform:translate3d(0,0,0)}to{transform:translate3d(42px,-32px,0)}}
-:root{
-  --tile-fill:rgba(31,122,82,.025); --tile-line:rgba(31,122,82,.10);
-  --tile-lit:rgba(31,122,82,.075); --tile-line-lit:rgba(31,122,82,.24);
-}
+.tilegrid .t.k1{opacity:.58; transform:translateY(-1px) scale(1.08)}
+.tilegrid .t.k2{opacity:.78; transform:translateY(-2px) scale(1.18)}
+.tilegrid .t.k3{opacity:1; transform:translateY(-3px) scale(1.30)}
+:root{--t-bg:rgba(31,122,82,.26); --t-line:rgba(31,122,82,.30)}
 @media (prefers-color-scheme: dark){
-  :root{
-    --tile-fill:rgba(92,185,140,.018); --tile-line:rgba(92,185,140,.075);
-    --tile-lit:rgba(92,185,140,.055); --tile-line-lit:rgba(92,185,140,.20);
-  }
+  :root{--t-bg:rgba(92,185,140,.22); --t-line:rgba(92,185,140,.26)}
 }
 .masthead,main,.foot{position:relative; z-index:1}
 .progress{
@@ -87,12 +77,11 @@
 .entry:hover .no{color:var(--green)}
 @media (max-width:640px){.entry::before{display:none}}
 @media (prefers-reduced-motion:reduce){
-  .aurora,.progress{display:none}
+  .tilegrid,.progress{display:none}
   html{scroll-behavior:auto}
   .js .reveal{opacity:1 !important; transform:none !important; transition:none}
   .sechead .line{transform:none !important; transition:none}
   .entry::before{transition:none}
-  .aurora .blob{animation:none}
 }
 ::selection{background:var(--green-soft); color:var(--ink)}
 :focus-visible{outline:2px solid var(--green); outline-offset:3px}
@@ -359,7 +348,7 @@ a.rowlink:hover h3{color:var(--green)}
 </style>
 </head>
 <body>
-<div class="aurora" aria-hidden="true"><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div><div class="tile"></div></div><div class="progress" aria-hidden="true"></div>
+<div class="tilegrid" aria-hidden="true"></div><div class="progress" aria-hidden="true"></div>
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
@@ -616,23 +605,59 @@ function bindGlobalMotion(){
   addEventListener("resize", onScroll);
   onScroll();
 
-  const aurora = document.querySelector(".aurora");
-  setTimeout(() => aurora.classList.add("ready"), 120);
+  const grid = document.querySelector(".tilegrid");
+  let cells = [], cache = [], prevK = [];
+  const buildTiles = () => {
+    const cols = Math.max(4, Math.floor((innerWidth-72)/72));
+    const rows = Math.max(4, Math.floor((innerHeight-72)/72));
+    const n = Math.min(cols*rows, 420);
+    let html = "";
+    for(let i=0;i<n;i++) html += '<i class="t"></i>';
+    grid.innerHTML = html;
+    grid.style.gridTemplateColumns = `repeat(${cols}, 10px)`;
+    cells = [...grid.children];
+    prevK = new Array(n).fill("");
+    requestAnimationFrame(() => {
+      cache = cells.map(el => {
+        const r = el.getBoundingClientRect();
+        return (r.left + r.width/2) + "," + (r.top + r.height/2);
+      });
+      grid.classList.add("ready");
+    });
+  };
+  buildTiles();
+  let resizeTimer;
+  addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(buildTiles, 180);
+  });
 
   if(!matchMedia("(pointer: fine)").matches) return;
-  const tiles = [...document.querySelectorAll(".tile")];
   const mark = document.querySelector(".wordmark .mono-mark");
   const mast = document.querySelector(".masthead");
+  let px=0, py=0, pending=false;
+  const run = () => {
+    pending = false;
+    for(let i=0;i<cells.length;i++){
+      const c = cache[i]; if(!c) continue;
+      const j = c.indexOf(",");
+      const d = Math.hypot(px - +c.slice(0,j), py - +c.slice(j+1));
+      const k = d<55 ? "3" : d<105 ? "2" : d<155 ? "1" : "";
+      if(prevK[i] !== k){
+        prevK[i] = k;
+        cells[i].className = k ? "t k"+k : "t";
+      }
+    }
+  };
   addEventListener("pointermove", e => {
-    let near = false;
-    tiles.forEach(el => {
-      const r = el.getBoundingClientRect();
-      const d = Math.hypot(e.clientX-(r.left+r.width/2), e.clientY-(r.top+r.height/2));
-      if(d < Math.max(r.width, r.height)*.85) near = true;
-      el.classList.toggle("lit", d < Math.max(r.width, r.height)*.85);
-    });
-    if(near) aurora.style.cursor = "";
+    px=e.clientX; py=e.clientY;
+    if(!pending){ pending=true; requestAnimationFrame(run); }
   },{passive:true});
+  addEventListener("pointerleave", () => {
+    for(let i=0;i<cells.length;i++){
+      if(prevK[i]){ prevK[i]=""; cells[i].className="t"; }
+    }
+  });
   if(mast && mark){
     mast.addEventListener("pointermove", e => {
       const r=mast.getBoundingClientRect();
