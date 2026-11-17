@@ -600,15 +600,21 @@ function bindGlobalMotion(){
   const glow = document.querySelector(".bg-glow");
   const mark = document.querySelector(".wordmark .mono-mark");
   const mast = document.querySelector(".masthead");
-  let tx=innerWidth/2, ty=innerHeight*.35, cx=tx, cy=ty, raf=0;
+  let tx=innerWidth/2, ty=innerHeight*.35, cx=tx, cy=ty, raf=0, lastMove=0;
   const loop = () => {
-    cx += (tx-cx)*.12; cy += (ty-cy)*.12;
+    if(Date.now()-lastMove > 2500){
+      const t=Date.now()/12000;
+      tx=innerWidth*(.5+.12*Math.sin(t));
+      ty=innerHeight*(.35+.08*Math.cos(t*.7));
+    }
+    cx += (tx-cx)*.08; cy += (ty-cy)*.08;
     glow.style.transform = `translate3d(${cx}px,${cy}px,0)`;
     raf = requestAnimationFrame(loop);
   };
   raf = requestAnimationFrame(loop);
+  setTimeout(() => glow.classList.add("body-ready"), 700);
   addEventListener("pointermove", e => {
-    tx=e.clientX; ty=e.clientY;
+    tx=e.clientX; ty=e.clientY; lastMove=Date.now();
     glow.classList.add("body-ready");
   },{passive:true});
   document.addEventListener("visibilitychange", () => {
