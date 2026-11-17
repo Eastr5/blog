@@ -31,31 +31,12 @@
 }
 *{box-sizing:border-box}
 
-/* 动效层：稀疏墨点阵，靠近时浮起并转为品牌绿 */
-.tilegrid{
-  position:fixed; inset:0; z-index:0; display:grid; justify-content:center;
-  align-content:center; gap:84px; pointer-events:none;
+/* 动效层：细颗粒点阵（canvas），鼠标靠近时局部浮起 */
+.dotfield{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
   opacity:0; transition:opacity 1.2s ease;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
 }
-.tilegrid.ready{opacity:1}
-.tilegrid .t{
-  width:7px; height:7px; border-radius:1.5px;
-  background:var(--t-ink); opacity:var(--o,.16);
-  transform:translateY(0) scale(1);
-  transition:transform .45s cubic-bezier(.16,1,.3,1), opacity .45s ease, background .45s ease;
-}
-.tilegrid .t.k1{transform:translateY(-1.5px) scale(1.14); opacity:calc(var(--o,.16) + .16)}
-.tilegrid .t.k2{transform:translateY(-2.5px) scale(1.34); opacity:calc(var(--o,.16) + .3)}
-.tilegrid .t.k3{
-  transform:translateY(-3.5px) scale(1.6);
-  opacity:calc(var(--o,.16) + .5); background:var(--t-accent);
-}
-:root{--t-ink:#1B1A17; --t-accent:#1F7A52}
-@media (prefers-color-scheme: dark){
-  :root{--t-ink:#E9E6DE; --t-accent:#5CB98C}
-}
+.dotfield.ready{opacity:1}
 .masthead,main,.foot{position:relative; z-index:1}
 .progress{
   position:fixed; top:0; left:0; width:100%; height:2px; z-index:60;
@@ -82,7 +63,7 @@
 .entry:hover .no{color:var(--green)}
 @media (max-width:640px){.entry::before{display:none}}
 @media (prefers-reduced-motion:reduce){
-  .tilegrid,.progress{display:none}
+  .dotfield,.progress{display:none}
   html{scroll-behavior:auto}
   .js .reveal{opacity:1 !important; transform:none !important; transition:none}
   .sechead .line{transform:none !important; transition:none}
@@ -353,7 +334,7 @@ a.rowlink:hover h3{color:var(--green)}
 </style>
 </head>
 <body>
-<div class="tilegrid" aria-hidden="true"></div><div class="progress" aria-hidden="true"></div>
+<canvas class="dotfield" aria-hidden="true"></canvas><div class="progress" aria-hidden="true"></div>
 <div class="topline"></div><div class="topline"></div>
 <header class="masthead">
   <div class="wrap">
@@ -610,66 +591,95 @@ function bindGlobalMotion(){
   addEventListener("resize", onScroll);
   onScroll();
 
-  const grid = document.querySelector(".tilegrid");
-  let cells = [], cache = [], prevK = [];
-  const buildTiles = () => {
-    const cols = Math.max(4, Math.floor((innerWidth-72)/91));
-    const rows = Math.max(4, Math.floor((innerHeight-72)/91));
-    const n = Math.min(cols*rows, 420);
-    let html = "";
-    for(let i=0;i<n;i++){
-      const o = (0.09 + Math.random()*0.15).toFixed(3);
-      html += `<i class="t" style="--o:${o}"></i>`;
+  const cv = document.querySelector(".dotfield");
+  const ctx = cv.getContext("2d");
+  let dpr=1, W=0, H=0, dots=[], rafId=0, mx=-9e4, my=-9e4;
+  const isDark = () => matchMedia("(prefers-color-scheme: dark)").matches;
+  const inkCol = () => isDark() ? [233,230,222] : [27,26,23];
+  const accCol = () => isDark() ? [92,185,140] : [31,122,82];
+
+  const paint = () => {
+    const I = inkCol(), A = accCol();
+    ctx.clearRect(0, 0, W, H);
+    const groups = new Map(), live = [];
+    for(const p of dots){
+      if(p.cur > 0.015){ live.push(p); continue; }
+      const a = Math.round(p.base * 50) / 50;
+      if(!groups.has(a)) groups.set(a, []);
+      groups.get(a).push(p);
     }
-    grid.innerHTML = html;
-    grid.style.gridTemplateColumns = `repeat(${cols}, 7px)`;
-    cells = [...grid.children];
-    prevK = new Array(n).fill("");
-    requestAnimationFrame(() => {
-      cache = cells.map(el => {
-        const r = el.getBoundingClientRect();
-        const cx = r.left + r.width/2, cy = r.top + r.height/2;
-        if(Math.abs(cx - innerWidth/2) < 340){
-          const o = parseFloat(el.style.getPropertyValue("--o")) || .12;
-          el.style.setProperty("--o", (o*0.4).toFixed(3));
-        }
-        return cx + "," + cy;
-      });
-      grid.classList.add("ready");
-    });
+    for(const [a, list] of groups){
+      ctx.beginPath();
+      for(const p of list){
+        ctx.moveTo(p.x + 0.95, p.y);
+        ctx.arc(p.x, p.y, 0.95, 0, 6.2832);
+      }
+      ctx.fillStyle = "rgba(" + I[0] + "," + I[1] + "," + I[2] + "," + a + ")";
+      ctx.fill();
+    }
+    for(const p of live){
+      const t = p.cur;
+      const r = 0.95 + t * 2.0;
+      const y = p.y - t * 4.2;
+      const cr = Math.round(I[0] + (A[0]-I[0]) * t);
+      const cg = Math.round(I[1] + (A[1]-I[1]) * t);
+      const cb = Math.round(I[2] + (A[2]-I[2]) * t);
+      const al = Math.min(1, p.base + t * 0.92);
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(" + cr + "," + cg + "," + cb + "," + al + ")";
+      ctx.arc(p.x, y, r, 0, 6.2832);
+      ctx.fill();
+    }
   };
-  buildTiles();
-  let resizeTimer;
-  addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(buildTiles, 180);
+
+  const step = () => {
+    let busy = false;
+    for(const p of dots){
+      const d = Math.hypot(mx - p.x, my - p.y);
+      const tgt = d < 180 ? Math.pow(1 - d/180, 1.25) : 0;
+      const diff = tgt - p.cur;
+      if(Math.abs(diff) > 0.002){ p.cur += diff * 0.16; busy = true; }
+      else p.cur = tgt;
+    }
+    paint();
+    rafId = busy ? requestAnimationFrame(step) : 0;
+  };
+
+  const buildDots = () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    cv.style.width = W+"px"; cv.style.height = H+"px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const gap = 34;
+    dots = [];
+    for(let y = gap/2; y < H; y += gap){
+      for(let x = gap/2; x < W; x += gap){
+        const base = 0.07 + Math.random()*0.09;
+        dots.push({ x, y, base, cur: 0 });
+      }
+    }
+    paint();
+    cv.classList.add("ready");
+  };
+  buildDots();
+  let rsz;
+  addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(buildDots, 200); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", paint);
+  document.addEventListener("visibilitychange", () => {
+    if(document.hidden && rafId){ cancelAnimationFrame(rafId); rafId = 0; }
   });
 
   if(!matchMedia("(pointer: fine)").matches) return;
   const mark = document.querySelector(".wordmark .mono-mark");
   const mast = document.querySelector(".masthead");
-  let px=0, py=0, pending=false;
-  const run = () => {
-    pending = false;
-    for(let i=0;i<cells.length;i++){
-      const c = cache[i]; if(!c) continue;
-      const j = c.indexOf(",");
-      const d = Math.hypot(px - +c.slice(0,j), py - +c.slice(j+1));
-      const k = d<60 ? "3" : d<115 ? "2" : d<170 ? "1" : "";
-      if(prevK[i] !== k){
-        prevK[i] = k;
-        cells[i].className = k ? "t k"+k : "t";
-      }
-    }
-  };
   addEventListener("pointermove", e => {
-    px=e.clientX; py=e.clientY;
-    if(!pending){ pending=true; requestAnimationFrame(run); }
-  },{passive:true});
+    mx = e.clientX; my = e.clientY;
+    if(!rafId) rafId = requestAnimationFrame(step);
+  }, { passive: true });
   addEventListener("pointerleave", () => {
-    for(let i=0;i<cells.length;i++){
-      if(prevK[i]){ prevK[i]=""; cells[i].className="t"; }
-    }
+    mx = my = -9e4;
+    if(!rafId) rafId = requestAnimationFrame(step);
   });
   if(mast && mark){
     mast.addEventListener("pointermove", e => {
